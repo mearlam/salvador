@@ -2,3 +2,18 @@ html, body {
     font-family: Calibri, Tahoma, FreeSans, Helvetica, Arial, sans-serif;
     font-size: small;
 }
+
+.stepContainer {
+    padding-bottom: 15px;
+}
+
+.stepType {
+    padding: 5px 5px 5px 5px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.stepText {
+    padding: 5px 5px 5px 5px;
+    margin-right: 10px;
+}

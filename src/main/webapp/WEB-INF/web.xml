@@ -31,7 +31,7 @@
 
     <!-- Welcome page -->
     <welcome-file-list>
-        <welcome-file>faces/default.xhtml</welcome-file>
+        <welcome-file>add-scenario.xhtml</welcome-file>
     </welcome-file-list>
 
     <!-- JSF mapping -->

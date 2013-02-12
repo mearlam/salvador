@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: mark
+  Date: 12/02/13
+  Time: 19:55
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="basic.css"/>
+</h:head>
+
+<h:body>
+    <h:form id="form">
+        <p:panel header="Details">
+            <h:panelGrid columns="2">
+                <h:outputText value="Name:"/>
+                <p:inputText value="#{scenarioContentBean.name}"/>
+            </h:panelGrid>
+        </p:panel>
+        <p:panel header="Steps">
+            <h:panelGrid columns="2">
+                <h:outputText value="Type:"/>
+                <p:selectOneMenu value="#{scenarioContentBean.stepType}">
+                    <f:selectItem itemValue="Given" itemLabel="Given"/>
+                    <f:selectItem itemValue="When" itemLabel="When"/>
+                    <f:selectItem itemValue="Then" itemLabel="Then"/>
+                    <f:selectItem itemValue="And" itemLabel="And"/>
+                </p:selectOneMenu>
+                <h:outputText value="Domain Step:"/>
+                <p:inputText size="100" value="#{scenarioContentBean.stepText}"/>
+                <h:outputText value="&nbsp;" escape="false"/>
+                <p:commandButton value="Add Step" action="#{scenarioBean.addScenarioStep}" update="@form"/>
+            </h:panelGrid>
+        </p:panel>
+
+        <p:panel header="Steps 2">
+            <h:panelGrid columns="3" binding="#{scenarioBean.grid}">
+                <p:selectOneMenu value="#{scenarioContentBean.stepType}">
+                    <f:selectItem itemValue="Given" itemLabel="Given"/>
+                    <f:selectItem itemValue="When" itemLabel="When"/>
+                    <f:selectItem itemValue="Then" itemLabel="Then"/>
+                    <f:selectItem itemValue="And" itemLabel="And"/>
+                </p:selectOneMenu>
+                <p:inputText size="100" value="#{scenarioContentBean.stepText}"/>
+                <p:commandButton icon="ui-icon-plus" action="#{scenarioBean.addNewRow}" update="@form"/>
+            </h:panelGrid>
+        </p:panel>
+
+        <h2>Steps</h2>
+        <ui:repeat value="#{scenarioBean.scenarios}" var="scenario">
+            <p:panel header="#{scenario.name}">
+                <ui:repeat value="#{scenario.steps}" var="step">
+                    <div class="stepContainer">
+                        <span class="stepType">#{step.type.name()}</span>
+                        <p:inplace id="basic">
+                            <p:inputText value="#{step.text}"/>
+                        </p:inplace>
+                        <!--<span class="stepText">#{step.text}</span>-->
+                    </div>
+                </ui:repeat>
+            </p:panel>
+        </ui:repeat>
+
+    </h:form>
+</h:body>
+
+</html>
