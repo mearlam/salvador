@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+        >
+<h:head>
+    <h:outputStylesheet library="css" name="basic.css"/>
+</h:head>
+
+<h:body>
+
+    <h1>Test Page</h1>
+    <h:form>
+
+        size:#{orderListBean.cities.size()}
+
+        <h:selectOneMenu id="selectOneCar">
+            <f:selectItems
+                    value="#{orderListBean.cities}" />
+        </h:selectOneMenu>
+
+        <p:orderList value="#{orderListBean.cities}" var="city" controlsLocation="none"
+                     itemLabel="#{city}" itemValue="#{city}" iconOnly="true" id="basicList"/>
+
+
+        <p:panel id="one" header="drag-me">
+            something in here
+        </p:panel>
+
+        <p:draggable for="one" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+
+    </h:form>
+
+</h:body>
+
+</html>
