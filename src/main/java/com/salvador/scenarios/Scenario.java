@@ -2,6 +2,7 @@ package com.salvador.scenarios;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,9 +15,11 @@ public class Scenario {
 
     private String name;
     private List<ScenarioStep> steps;
+    private List<Map<String,String>> testRows;
 
     public Scenario() {
         steps = new ArrayList<ScenarioStep>();
+        testRows = new ArrayList<Map<String, String>>();
     }
 
     public String getName() {
@@ -33,5 +36,13 @@ public class Scenario {
 
     public void setSteps(List<ScenarioStep> steps) {
         this.steps = steps;
+    }
+
+    public List<Map<String, String>> getTestRows() {
+        return testRows;
+    }
+
+    public void setTestRows(List<Map<String, String>> testRows) {
+        this.testRows = testRows;
     }
 }

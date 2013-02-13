@@ -4,6 +4,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.component.html.HtmlPanelGrid;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +19,7 @@ public class ScenarioContentBean implements Serializable {
 
     private String stepType;
     private String stepText;
+    private List<String> parameter;
 
     private boolean created;
 
@@ -43,5 +45,13 @@ public class ScenarioContentBean implements Serializable {
 
     public void setCreated(boolean created) {
         this.created = created;
+    }
+
+    public List<String> getParameter() {
+        return parameter;
+    }
+
+    public void setParameter(List<String> parameter) {
+        this.parameter = parameter;
     }
 }

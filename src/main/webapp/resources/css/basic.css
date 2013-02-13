@@ -3,17 +3,28 @@ html, body {
     font-size: small;
 }
 
-.stepContainer {
-    padding-bottom: 15px;
+table
+{
+    border-collapse:collapse;
 }
 
-.stepType {
-    padding: 5px 5px 5px 5px;
-    margin-right: 10px;
-    font-weight: bold;
+table.scenarioTable
+{
+    border: 1px solid #d3d3d3;
 }
 
-.stepText {
-    padding: 5px 5px 5px 5px;
-    margin-right: 10px;
+table.scenarioTable th
+{
+    border: 1px solid #d3d3d3;
+}
+
+
+table.scenarioTable td
+{
+    border: 1px solid #d3d3d3;
+}
+
+
+.scenarioContainer {
+    margin-bottom: 10px;
 }
