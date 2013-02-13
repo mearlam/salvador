@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Created by IntelliJ IDEA.
-  User: mark
-  Date: 12/02/13
-  Time: 19:55
--->
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -24,7 +18,7 @@
         <p:panel header="Details">
             <h:panelGrid columns="2">
                 <h:outputText value="Name:"/>
-                <p:inputText value="#{scenarioContentBean.name}"/>
+                <p:inputText value="#{scenarioBean.name}" required="true"/>
             </h:panelGrid>
         </p:panel>
         <p:panel header="Steps">
@@ -37,39 +31,23 @@
                     <f:selectItem itemValue="And" itemLabel="And"/>
                 </p:selectOneMenu>
                 <h:outputText value="Domain Step:"/>
-                <p:inputText size="100" value="#{scenarioContentBean.stepText}"/>
+                <p:inputText size="100" value="#{scenarioContentBean.stepText}" required="true"/>
                 <h:outputText value="&nbsp;" escape="false"/>
-                <p:commandButton value="Add Step" action="#{scenarioBean.addScenarioStep}" update="@form"/>
-            </h:panelGrid>
-        </p:panel>
-
-        <p:panel header="Steps 2">
-            <h:panelGrid columns="3" binding="#{scenarioBean.grid}">
-                <p:selectOneMenu value="#{scenarioContentBean.stepType}">
-                    <f:selectItem itemValue="Given" itemLabel="Given"/>
-                    <f:selectItem itemValue="When" itemLabel="When"/>
-                    <f:selectItem itemValue="Then" itemLabel="Then"/>
-                    <f:selectItem itemValue="And" itemLabel="And"/>
-                </p:selectOneMenu>
-                <p:inputText size="100" value="#{scenarioContentBean.stepText}"/>
-                <p:commandButton icon="ui-icon-plus" action="#{scenarioBean.addNewRow}" update="@form"/>
+                <p:commandButton value="Add" action="#{scenarioBean.addScenarioStep}" update="@form"/>
             </h:panelGrid>
         </p:panel>
 
         <h2>Steps</h2>
-        <ui:repeat value="#{scenarioBean.scenarios}" var="scenario">
-            <p:panel header="#{scenario.name}">
-                <ui:repeat value="#{scenario.steps}" var="step">
-                    <div class="stepContainer">
-                        <span class="stepType">#{step.type.name()}</span>
-                        <p:inplace id="basic">
-                            <p:inputText value="#{step.text}"/>
-                        </p:inplace>
-                        <!--<span class="stepText">#{step.text}</span>-->
-                    </div>
-                </ui:repeat>
-            </p:panel>
+        <table cellpadding="2" cellspacing="0">
+        <ui:repeat value="#{scenarioBean.scenario.steps}" var="step">
+            <tr>
+                <td style="border: 1px solid #d3d3d3">#{step.type.name()}</td>
+                <td style="border: 1px solid #d3d3d3">#{step.text}</td>
+            </tr>
         </ui:repeat>
+        </table>
+
+        <p:commandButton value="Create Scenario" />
 
     </h:form>
 </h:body>

@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
+<f:view id="main-view">
+    <h:head>
+        <title>Salvador <ui:insert name="title"/></title>
+
+        <h:outputStylesheet library="css" name="basic.css"/>
+        <h:outputScript library="javax.faces" name="jsf.js"/>
+
+        <ui:insert name="extra-head-content"/>
+    </h:head>
+    <h:body lang="#{request.locale.language}">
+        <h1 class="screenReaderOnly"><ui:insert name="title"/></h1>
+        <h:panelGroup id="mainContainer" layout="block">
+            <ui:insert name="main"/>
+        </h:panelGroup>
+    </h:body>
+</f:view>
+</html>

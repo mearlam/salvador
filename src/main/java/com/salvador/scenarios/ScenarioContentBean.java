@@ -10,23 +10,16 @@ import java.io.Serializable;
  * User: mark
  * Date: 12/02/13
  * Time: 20:14
- * To change this template use File | Settings | File Templates.
  */
 @Named
 @RequestScoped
 public class ScenarioContentBean implements Serializable {
 
-    private String name;
+
     private String stepType;
     private String stepText;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private boolean created;
 
     public String getStepType() {
         return stepType;
@@ -42,5 +35,13 @@ public class ScenarioContentBean implements Serializable {
 
     public void setStepText(String stepText) {
         this.stepText = stepText;
+    }
+
+    public boolean isCreated() {
+        return created;
+    }
+
+    public void setCreated(boolean created) {
+        this.created = created;
     }
 }
