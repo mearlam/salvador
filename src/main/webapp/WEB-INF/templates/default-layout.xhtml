@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      >
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+        >
 <f:view id="main-view">
     <h:head>
         <title>Salvador <ui:insert name="title"/></title>
@@ -18,6 +18,25 @@
     <h:body lang="#{request.locale.language}">
         <h1 class="screenReaderOnly"><ui:insert name="title"/></h1>
         <h:panelGroup id="mainContainer" layout="block">
+
+            <h:form id="menu-form">
+                <p:menubar>
+                    <p:menuitem value="Home" url="/"/>
+                    <p:submenu label="Run">
+                        <p:menuitem value="Suite" url="/"/>
+                        <p:menuitem value="Test" url="/"/>
+                    </p:submenu>
+                    <p:submenu label="Add">
+                        <p:menuitem value="Page" url="/pages/add-page.xhtml"/>
+                        <p:menuitem value="Scenario" url="/pages/add-scenario.xhtml"/>
+                    </p:submenu>
+                    <p:submenu label="Options">
+                        <p:menuitem value="Delete" url="/"/>
+                    </p:submenu>
+                    <p:menuitem value="Administation" url="/pages/admin.xhtml"/>
+                </p:menubar>
+            </h:form>
+
             <ui:insert name="main"/>
         </h:panelGroup>
     </h:body>

@@ -31,8 +31,19 @@
 
     <!-- Welcome page -->
     <welcome-file-list>
-        <welcome-file>add-scenario.xhtml</welcome-file>
+        <welcome-file>default.xhtml</welcome-file>
     </welcome-file-list>
+
+    <servlet>
+        <servlet-name>Page Servlet</servlet-name>
+        <servlet-class>com.salvador.pages.PageServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Page Servlet</servlet-name>
+        <url-pattern>/tests/*</url-pattern>
+    </servlet-mapping>
 
     <!-- JSF mapping -->
     <servlet>

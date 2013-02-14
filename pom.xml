@@ -39,6 +39,12 @@
             <artifactId>hsqldb</artifactId>
             <version>2.2.6</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Hibernate core -->
         <dependency>
@@ -189,19 +195,20 @@
             <artifactId>weld-servlet</artifactId>
             <version>1.1.10.Final</version>
         </dependency>
+        <dependency>
+            <groupId>xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.0.1</version>
+        </dependency>
 
     </dependencies>
 
     <build>
-        <!--<resources>-->
-            <!--<resource>-->
-                <!--<directory>src/main/resources/META-INF</directory>-->
-                <!--<targetPath>META-INF</targetPath>-->
-                <!--<includes>-->
-                    <!--<include>**/*.xml</include>-->
-                <!--</includes>-->
-            <!--</resource>-->
-        <!--</resources>-->
 
         <plugins>
             <plugin>

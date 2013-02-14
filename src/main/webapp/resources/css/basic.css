@@ -3,6 +3,10 @@ html, body {
     font-size: small;
 }
 
+h1 {
+    font-size: 1.2em;
+}
+
 table
 {
     border-collapse:collapse;
@@ -26,5 +30,10 @@ table.scenarioTable td
 
 
 .scenarioContainer {
+    margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.pageLink {
+    font-size: 1.2em;
 }

@@ -1,9 +1,16 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
                 template="/WEB-INF/templates/default-layout.xhtml">
 
     <ui:define name="main">
-        <ui:include src="/WEB-INF/templates/add-scenario.xhtml"/>
+        <p:breadCrumb model="#{pageBean.menuModel}" style="margin-top:0.5em;" />
+        <ul>
+        <ui:repeat value="#{pageBean.getPages()}" var="page">
+            <li><h:outputLink styleClass="pageLink" value="#{request.contextPath}/tests/#{page.path}#{page.name}">#{page.name}</h:outputLink></li>
+        </ui:repeat>
+        </ul>
     </ui:define>
 
 

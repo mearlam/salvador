@@ -1,5 +1,6 @@
 package com.salvador.scenarios;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +12,10 @@ import java.util.Map;
  * Time: 20:10
  * To change this template use File | Settings | File Templates.
  */
-public class Scenario {
+public class Scenario implements Serializable {
 
+
+    private static final long serialVersionUID = -5550557777493406291L;
     private String name;
     private List<ScenarioStep> steps;
     private List<Map<String,String>> testRows;

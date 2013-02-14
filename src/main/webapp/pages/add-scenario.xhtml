@@ -1,0 +1,82 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        template="/WEB-INF/templates/default-layout.xhtml">
+
+    <ui:define name="main">
+        <h:form id="form">
+
+            <h:panelGroup layout="block" style="width: 50%;">
+                <p:panel header="Details" styleClass="scenarioContainer">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Name:"/>
+                        <p:inputText value="#{scenarioBean.name}" required="true"/>
+                    </h:panelGrid>
+                </p:panel>
+                <p:panel header="Steps" styleClass="scenarioContainer">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Type:"/>
+                        <p:selectOneMenu value="#{scenarioContentBean.stepType}">
+                            <f:selectItem itemValue="Given" itemLabel="Given"/>
+                            <f:selectItem itemValue="When" itemLabel="When"/>
+                            <f:selectItem itemValue="Then" itemLabel="Then"/>
+                            <f:selectItem itemValue="And" itemLabel="And"/>
+                        </p:selectOneMenu>
+                        <h:outputText value="Domain Step:"/>
+                        <p:inputText size="100" value="#{scenarioContentBean.stepText}" required="true"/>
+                        <h:outputText value="&#160;" escape="false"/>
+                        <p:commandButton value="Add" action="#{scenarioBean.addScenarioStep}" update="@form"/>
+                    </h:panelGrid>
+                </p:panel>
+                <p:panel header="Test Parameters">
+                    <table cellpadding="2" cellspacing="0">
+                        <ui:repeat value="#{scenarioBean.parameters}" var="parameter">
+                            <tr>
+                                <td style="font-weight: bold">#{parameter}</td>
+                                <td><input type="text" name="#{parameter}" size="50"/></td>
+                            </tr>
+                        </ui:repeat>
+                        <tr>
+                            <td colspan="2"><p:commandButton value="Add" action="#{scenarioBean.addParameterSet}"
+                                                             update="@form"/></td>
+                        </tr>
+                    </table>
+                </p:panel>
+
+                <h2>Steps</h2>
+                <table cellpadding="2" cellspacing="0" width="100%" class="scenarioTable">
+                    <ui:repeat value="#{scenarioBean.scenario.steps}" var="step">
+                        <tr>
+                            <td>#{step.type.name()}</td>
+                            <td>#{step.text}</td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+
+                <h2>Data</h2>
+                <table cellpadding="2" cellspacing="0" width="100%" class="scenarioTable">
+                    <tr>
+                        <ui:repeat value="#{scenarioBean.parameters}" var="parameter">
+                            <th>#{parameter}</th>
+                        </ui:repeat>
+                    </tr>
+                    <ui:repeat value="#{scenarioBean.scenario.testRows}" var="row">
+                        <tr>
+                            <ui:repeat value="#{row.keySet().toArray()}" var="key">
+                                <td>#{row.get(key)}</td>
+                            </ui:repeat>
+                        </tr>
+                    </ui:repeat>
+                </table>
+
+                <div style="text-align: right;">
+                    <p:commandButton value="Create Scenario"/>
+                </div>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

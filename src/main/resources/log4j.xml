@@ -1,23 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-
-    <appender name="ASYNC" class="org.apache.log4j.AsyncAppender">
-        <appender-ref ref="CONSOLE"/>
-    </appender>
-
-    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%-d: %-5p [%8c](%F:%L) %x - %m%n"/>
+            <param name="ConversionPattern" value="%d{ABSOLUTE}
+      %5p %c{1}:%L - %m%n"/>
+
         </layout>
     </appender>
-
-    <category name="org.hibernate">
-        <priority value="ERROR"/>
-    </category>
-
     <root>
-        <priority value="INFO" />
-        <appender-ref ref="ASYNC"/>
+        <priority value="INFO"></priority>
+        <appender-ref ref="stdout"/>
     </root>
-
 </log4j:configuration>
