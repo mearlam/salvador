@@ -10,7 +10,7 @@ import java.util.Map;
  * User: mark
  * Date: 12/02/13
  * Time: 20:10
- * To change this template use File | Settings | File Templates.
+ *
  */
 public class Scenario implements Serializable {
 
@@ -19,10 +19,12 @@ public class Scenario implements Serializable {
     private String name;
     private List<ScenarioStep> steps;
     private List<Map<String,String>> testRows;
+    private boolean enabled;
 
     public Scenario() {
         steps = new ArrayList<ScenarioStep>();
         testRows = new ArrayList<Map<String, String>>();
+        enabled = true;
     }
 
     public String getName() {
@@ -47,5 +49,13 @@ public class Scenario implements Serializable {
 
     public void setTestRows(List<Map<String, String>> testRows) {
         this.testRows = testRows;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

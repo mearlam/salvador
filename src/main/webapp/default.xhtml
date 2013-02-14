@@ -2,10 +2,13 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
                 template="/WEB-INF/templates/default-layout.xhtml">
 
     <ui:define name="main">
-        <p:breadCrumb model="#{pageBean.menuModel}" style="margin-top:0.5em;"/>
+        <p:breadCrumb model="#{pageBean.menuModel}" style="margin-top:0.5em;" styleClass="breadcrumb"/>
+
+        <h2>Child pages:</h2>
         <ul>
             <ui:repeat value="#{pageBean.getPages()}" var="page">
                 <li><h:outputLink styleClass="pageLink"
@@ -14,33 +17,47 @@
             </ui:repeat>
         </ul>
 
+        <h:form>
 
-        <ui:repeat value="#{pageBean.page.scenarios}" var="scenario">
-            <h2>#{scenario.name}</h2>
-            <table cellpadding="4" cellspacing="0" class="scenarioTable">
-                <ui:repeat value="#{scenario.steps}" var="step">
-                    <tr>
-                        <td>#{step.type.name()}</td>
-                        <td>#{step.text}</td>
-                    </tr>
-                </ui:repeat>
-            </table>
-            <table cellpadding="4" cellspacing="0" class="scenarioTable" style="margin-top: 0.5em">
-                <ui:repeat value="#{scenario.testRows}" var="row">
-                    <tr>
-                        <ui:repeat value="#{row.keySet().toArray()}" var="key">
-                            <th>#{key}</th>
+            <ui:repeat value="#{pageBean.page.scenarios}" var="scenario">
+                <p:panel closable="true" toggleable="true" header="#{scenario.name}" id="panel">
+                    <f:facet name="options">
+                        <p:menu>
+                            <p:submenu label="Settings">
+                                <p:menuitem value="Disable"/>
+                                <p:menuitem value="Move Up"/>
+                                <p:menuitem value="Move Down"/>
+                            </p:submenu>
+                        </p:menu>
+                    </f:facet>
+                    <table cellpadding="4" cellspacing="0" class="scenarioTable">
+                        <ui:repeat value="#{scenario.steps}" var="step">
+                            <tr>
+                                <td>#{step.type.name()}</td>
+                                <td>#{step.text}</td>
+                            </tr>
                         </ui:repeat>
-                    </tr>
-                    <tr>
-                        <ui:repeat value="#{row.keySet().toArray()}" var="key">
-                            <td>#{row.get(key)}</td>
-                        </ui:repeat>
-                    </tr>
-                </ui:repeat>
-            </table>
+                    </table>
+                    <h:panelGroup layout="block" rendered="#{not empty scenario.testRows}">
+                        <table cellpadding="4" cellspacing="0" class="scenarioTable" style="margin-top: 0.5em">
+                            <tr>
+                                <ui:repeat value="#{scenario.testRows.get(0).keySet().toArray()}" var="key">
+                                    <th>#{key}</th>
+                                </ui:repeat>
+                            </tr>
+                            <ui:repeat value="#{scenario.testRows}" var="row">
+                                <tr>
+                                    <ui:repeat value="#{row.keySet().toArray()}" var="key">
+                                        <td>#{row.get(key)}</td>
+                                    </ui:repeat>
+                                </tr>
+                            </ui:repeat>
+                        </table>
+                    </h:panelGroup>
+                </p:panel>
+            </ui:repeat>
 
-        </ui:repeat>
+        </h:form>
 
 
     </ui:define>

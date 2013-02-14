@@ -13,11 +13,13 @@ public class Page implements Serializable {
     private String name;
     private String path;
     private Date created;
+    private boolean enabled;
     private List<Scenario> scenarios;
 
     public Page() {
         created = new Date();
         scenarios = new ArrayList<Scenario>();
+        enabled = true;
     }
 
     public List<Scenario> getScenarios() {
@@ -50,5 +52,13 @@ public class Page implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
