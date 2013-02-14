@@ -1,0 +1,15 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h2>Steps</h2>
+    <table cellpadding="2" cellspacing="0" width="100%" class="scenarioTable">
+    <ui:repeat value="#{scenarioBean.scenario.steps}" var="step">
+        <tr>
+            <td>#{step.type.name()}</td>
+            <td>#{step.text}</td>
+        </tr>
+    </ui:repeat>
+    </table>
+
+</ui:composition>

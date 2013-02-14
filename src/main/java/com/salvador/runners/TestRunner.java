@@ -1,6 +1,6 @@
 package com.salvador.runners;
 
-import java.util.List;
+import com.salvador.loggers.LogReader;
 
 /**
  * Created by IntelliJ IDEA.

@@ -1,10 +1,17 @@
 package com.salvador.scenarios;
 
+import com.salvador.pages.Page;
+import com.salvador.pages.PageManager;
+import com.salvador.utils.FacesUtils;
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 
+import javax.annotation.PostConstruct;
 import javax.el.MethodExpression;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UISelectItem;
 import javax.faces.component.html.HtmlPanelGrid;
@@ -13,6 +20,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -26,23 +34,46 @@ import java.util.Map;
  * Time: 20:10
  */
 @Named
-@SessionScoped
+@ConversationScoped
 public class ScenarioBean implements Serializable {
 
     @Inject
     ScenarioContentBean scenarioContentBean;
 
+    @Inject
+    Conversation conversation;
+
+    @SuppressWarnings("CdiUnproxyableBeanTypesInspection")
+    @Inject
+    transient PageManager pageManager;
+
     private String name;
+    private String pagePath;
     private Scenario scenario;
     private List<String> parameters;
 
-    public String createScenario() {
-        return "";
+    @PostConstruct
+    public void init() {
+        conversation.begin();
+    }
+
+    public void createScenario() throws IOException {
+
+        Page page = pageManager.getPage(pagePath);
+
+        if (page != null) {
+            page.getScenarios().add(scenario);
+            pageManager.save(page);
+            conversation.end();
+
+            FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath() + page.getName());
+        }
     }
 
     public String addScenarioStep() {
 
         if (scenario == null) {
+            pagePath = FacesUtils.getParam("page");
             scenario = new Scenario();
             parameters = new ArrayList<String>();
         }
@@ -63,10 +94,10 @@ public class ScenarioBean implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
 
-        Map<String,String> testParams = new LinkedHashMap<String, String>();
+        Map<String, String> testParams = new LinkedHashMap<String, String>();
         for (String param : parameters) {
             String paramValue = (String) externalContext.getRequestParameterMap().get(param);
-            testParams.put(param,paramValue);
+            testParams.put(param, paramValue);
         }
 
         scenario.getTestRows().add(testParams);
@@ -108,4 +139,6 @@ public class ScenarioBean implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

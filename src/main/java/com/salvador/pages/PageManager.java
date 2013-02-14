@@ -16,6 +16,8 @@ import java.util.List;
 
 public class PageManager {
 
+    public static final String TEST_FOLDER = "test";
+
     static final Logger log = LoggerFactory.getLogger(PageManager.class);
 
     @Inject
@@ -25,6 +27,25 @@ public class PageManager {
 
     public PageManager() {
         xStream = new XStream();
+    }
+
+    public Page getPage(String pagePath) throws IOException {
+
+        Page page = null;
+
+        if (pagePath != null) {
+            final String filePagePath = configuration.getPagesHome() + getParentPath(pagePath);
+            File directory = new File(filePagePath);
+            File contentFile = new File(directory.getAbsolutePath() + File.separator + "content.xml");
+
+            if (contentFile.exists()) {
+                final FileInputStream inputStream = new FileInputStream(contentFile.getAbsolutePath());
+                page = (Page) xStream.fromXML(inputStream);
+                inputStream.close();
+            }
+        }
+
+        return page;
     }
 
     public List<Page> getPages(String root) throws IOException {
@@ -50,10 +71,9 @@ public class PageManager {
         return pages;
     }
 
-    public void save(Page page, String referer) throws IOException {
-        page.setPath(getParentPath(referer,"/"));
+    public void save(Page page) throws IOException {
         final String xml = xStream.toXML(page);
-        final String parentPath = getParentPath(referer);
+        final String parentPath = page.getPath();
         final String cleanPageName = getCleanPageName(page);
         final String pageDirectoryPath = configuration.getPagesHome() + parentPath + cleanPageName;
         log.debug("Creating new page directory {}", pageDirectoryPath);
@@ -64,20 +84,22 @@ public class PageManager {
     }
 
     public String getParentPath(String referer) {
-        return getParentPath(referer,File.separator);
+        return getParentPath(referer, File.separator);
     }
 
     public String getParentPath(String referer, String separator) {
         String path = "";
 
-        if (referer.contains("tests")) {
-            final String[] parts = referer.split("tests/");
+        if (referer.contains(PageManager.TEST_FOLDER)) {
+            final String[] parts = referer.split(PageManager.TEST_FOLDER + "/");
             final String fullPath = parts[parts.length - 1];
             path = fullPath.replace("/", separator);
 
             if (!path.endsWith(separator)) {
                 path += separator;
             }
+        }else {
+            path = referer.replace("/", separator);
         }
 
         return path;

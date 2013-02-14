@@ -42,7 +42,7 @@
 
     <servlet-mapping>
         <servlet-name>Page Servlet</servlet-name>
-        <url-pattern>/tests/*</url-pattern>
+        <url-pattern>/test/*</url-pattern>
     </servlet-mapping>
 
     <!-- JSF mapping -->

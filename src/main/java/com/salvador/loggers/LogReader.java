@@ -1,4 +1,4 @@
-package com.salvador.runners;
+package com.salvador.loggers;
 
 /**
  * Created by IntelliJ IDEA.

@@ -3,6 +3,7 @@ package com.salvador.configuration;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import java.io.File;
+import java.io.Serializable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,7 +12,7 @@ import java.io.File;
  * Time: 11:13
  */
 @ApplicationScoped
-public class Configuration {
+public class Configuration implements Serializable {
 
     private String home;
 

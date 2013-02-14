@@ -5,12 +5,44 @@
                 template="/WEB-INF/templates/default-layout.xhtml">
 
     <ui:define name="main">
-        <p:breadCrumb model="#{pageBean.menuModel}" style="margin-top:0.5em;" />
+        <p:breadCrumb model="#{pageBean.menuModel}" style="margin-top:0.5em;"/>
         <ul>
-        <ui:repeat value="#{pageBean.getPages()}" var="page">
-            <li><h:outputLink styleClass="pageLink" value="#{request.contextPath}/tests/#{page.path}#{page.name}">#{page.name}</h:outputLink></li>
-        </ui:repeat>
+            <ui:repeat value="#{pageBean.getPages()}" var="page">
+                <li><h:outputLink styleClass="pageLink"
+                                  value="#{request.contextPath}/test/#{page.path}#{page.name}">#{page.name}</h:outputLink>
+                </li>
+            </ui:repeat>
         </ul>
+
+
+        <ui:repeat value="#{pageBean.page.scenarios}" var="scenario">
+            <h2>#{scenario.name} <span style="color: #d3d3d3">steps</span></h2>
+            <table cellpadding="2" cellspacing="0" width="100%" class="scenarioTable">
+                <ui:repeat value="#{scenario.steps}" var="step">
+                    <tr>
+                        <td>#{step.type.name()}</td>
+                        <td>#{step.text}</td>
+                    </tr>
+                </ui:repeat>
+            </table>
+            <table cellpadding="2" cellspacing="0" class="scenarioTable" style="margin-top: 0.5em">
+                <ui:repeat value="#{scenario.testRows}" var="row">
+                    <tr>
+                        <ui:repeat value="#{row.keySet().toArray()}" var="key">
+                            <th>#{key}</th>
+                        </ui:repeat>
+                    </tr>
+                    <tr>
+                        <ui:repeat value="#{row.keySet().toArray()}" var="key">
+                            <td>#{row.get(key)}</td>
+                        </ui:repeat>
+                    </tr>
+                </ui:repeat>
+            </table>
+
+        </ui:repeat>
+
+
     </ui:define>
 
 

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,6 +24,7 @@ import java.util.List;
 public class PageBean {
 
     static final Logger log = LoggerFactory.getLogger(PageBean.class);
+
 
     private String name;
 
@@ -46,7 +46,7 @@ public class PageBean {
         if (requestedUri != null) {
             path = pageManager.getParentPath(requestedUri, "/");
             final String[] pages = path.split("/");
-            String currentPath = "/tests/";
+            String currentPath = "/" + PageManager.TEST_FOLDER + "/";
             for (String page : pages) {
                 currentPath += page + "/";
                 MenuItem item = new MenuItem();
@@ -57,6 +57,10 @@ public class PageBean {
         }
 
         return model;
+    }
+
+    public Page getPage() throws IOException {
+        return pageManager.getPage(FacesUtils.getDestinationPage());
     }
 
     private List<Page> getPages() throws IOException {
@@ -81,13 +85,14 @@ public class PageBean {
 
         page = new Page();
         page.setName(name);
+        page.setPath(pageManager.getParentPath(referer, "/"));
         try {
-            pageManager.save(page, referer);
+            pageManager.save(page);
         } catch (IOException e) {
             log.error("Could not save page", e);
         }
 
-        FacesUtils.redirect("/tests/" + page.getPath() + page.getName());
+        FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath() + page.getName());
     }
 
     public String getName() {

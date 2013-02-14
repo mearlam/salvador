@@ -1,5 +1,6 @@
 package com.salvador.runners;
 
+import com.salvador.loggers.LogReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
