@@ -16,8 +16,8 @@
 
 
         <ui:repeat value="#{pageBean.page.scenarios}" var="scenario">
-            <h2>#{scenario.name} <span style="color: #d3d3d3">steps</span></h2>
-            <table cellpadding="2" cellspacing="0" width="100%" class="scenarioTable">
+            <h2>#{scenario.name}</h2>
+            <table cellpadding="4" cellspacing="0" class="scenarioTable">
                 <ui:repeat value="#{scenario.steps}" var="step">
                     <tr>
                         <td>#{step.type.name()}</td>
@@ -25,7 +25,7 @@
                     </tr>
                 </ui:repeat>
             </table>
-            <table cellpadding="2" cellspacing="0" class="scenarioTable" style="margin-top: 0.5em">
+            <table cellpadding="4" cellspacing="0" class="scenarioTable" style="margin-top: 0.5em">
                 <ui:repeat value="#{scenario.testRows}" var="row">
                     <tr>
                         <ui:repeat value="#{row.keySet().toArray()}" var="key">
