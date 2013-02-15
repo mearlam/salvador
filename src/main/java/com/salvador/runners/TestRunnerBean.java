@@ -31,6 +31,7 @@ public class TestRunnerBean implements Serializable {
     @Inject
     Conversation conversation;
 
+    @SuppressWarnings("CdiUnproxyableBeanTypesInspection")
     @Inject
     transient PageManager pageManager;
 
@@ -55,7 +56,7 @@ public class TestRunnerBean implements Serializable {
             testRunner.run(parameters, new LogReader() {
                 @Override
                 public void addLog(String log) {
-                    logBuffer.append(log).append("<br/>");
+                    logBuffer.append(log).append(System.getProperty("line.separator"));
                 }
             });
 
