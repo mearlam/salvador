@@ -8,5 +8,5 @@ package com.salvador.executors;
  */
 public interface TestExecutor {
 
-    void execute();
+    void execute(String home, String page);
 }

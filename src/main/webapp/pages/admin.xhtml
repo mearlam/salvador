@@ -12,15 +12,19 @@
             <input type="hidden" name="referer" value="#{request.getHeader('Referer')}" />
 
             <h:panelGroup layout="block" style="width: 50%;">
-                <p:panel header="Test Runner">
+                <p:panel header="Running tests">
                     <h:panelGrid columns="2">
                         <h:outputText value="Test Runner Class:"/>
-                        <p:inputText />
+                        <p:inputText value="#{configurationBean.configuration.testRunnerClass}" size="50" />
+                        <h:outputText value="Test Executor Class:"/>
+                        <p:inputText value="#{configurationBean.configuration.testExecutorClass}" size="50" />
+                        <h:outputText value="Java classpath:"/>
+                        <p:inputTextarea rows="10" cols="53" />
                     </h:panelGrid>
                 </p:panel>
 
                 <div style="text-align: right;">
-                    <p:commandButton value="Save" ajax="false"/>
+                    <p:commandButton value="Save" ajax="false" action="#{configurationBean.update}"/>
                 </div>
 
             </h:panelGroup>

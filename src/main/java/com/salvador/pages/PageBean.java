@@ -1,5 +1,6 @@
 package com.salvador.pages;
 
+import com.salvador.configuration.Configuration;
 import com.salvador.utils.FacesUtils;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.model.DefaultMenuModel;
@@ -33,6 +34,9 @@ public class PageBean {
     @Inject
     PageManager pageManager;
 
+    @Inject
+    Configuration configuration;
+
     public MenuModel getMenuModel() throws IOException {
         MenuModel model = new DefaultMenuModel();
         MenuItem home = new MenuItem();
@@ -60,7 +64,7 @@ public class PageBean {
     }
 
     public Page getPage() throws IOException {
-        return pageManager.getPage(FacesUtils.getDestinationPage());
+        return pageManager.getPage(configuration.getPagesHome(), FacesUtils.getDestinationPage());
     }
 
     private List<Page> getPages() throws IOException {
@@ -71,7 +75,7 @@ public class PageBean {
             path = pageManager.getParentPath(requestedUri);
         }
 
-        return pageManager.getPages(path);
+        return pageManager.getPages(configuration.getPagesHome() + path);
     }
 
     public String getPagePath() {
@@ -87,7 +91,7 @@ public class PageBean {
         page.setName(name);
         page.setPath(pageManager.getParentPath(referer, "/"));
         try {
-            pageManager.save(page);
+            pageManager.save(configuration.getPagesHome(), page);
         } catch (IOException e) {
             log.error("Could not save page", e);
         }

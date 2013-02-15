@@ -1,9 +1,11 @@
 package com.salvador.executors;
 
-import com.salvador.scanners.DefaultStepScanner;
-import com.salvador.scanners.StepScanner;
+import com.salvador.pages.Page;
+import com.salvador.pages.PageManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,17 +15,30 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultExecutor implements TestExecutor {
 
-    final Logger log = LoggerFactory.getLogger(DefaultExecutor.class);
+    static final Logger log = LoggerFactory.getLogger(DefaultExecutor.class);
 
-    StepScanner stepScanner = new DefaultStepScanner();
+    PageManager pageManager = new PageManager();
 
     @Override
-    public void execute() {
+    public void execute(String home, String pagePath) {
         log.info("Executing test");
+        try {
+            final Page page = pageManager.getPage(home,pagePath);
+            log.info("Test page: '{}'", page.getFullPath());
+            log.info("Scenarios: '{}'", page.getScenarios().size());
+            log.info("Child pages: '{}'", page.getChildren().size());
+        } catch (IOException e) {
+            log.error("Could not run tests", e);
+        }
     }
 
     public static void main(String[] args) {
-        DefaultExecutor executor = new DefaultExecutor();
-        executor.execute();
+
+        if (args.length == 2) {
+            DefaultExecutor executor = new DefaultExecutor();
+            executor.execute(args[0],args[1]);
+        }else {
+            log.error("You must supply home and page");
+        }
     }
 }

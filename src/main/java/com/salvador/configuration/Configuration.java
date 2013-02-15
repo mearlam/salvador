@@ -15,10 +15,16 @@ import java.io.Serializable;
 public class Configuration implements Serializable {
 
     private String home;
+    private String javaHome;
+    private String testRunnerClass;
+    private String testExecutorClass;
 
     @PostConstruct
     public void init() {
         home = "C:\\mine\\salvador\\home\\";
+        javaHome = System.getenv().get("JAVA_HOME");
+        testRunnerClass = "com.salvador.runners.JavaTestRunner";
+        testExecutorClass = "com.salvador.executors.DefaultExecutor";
     }
 
     public String getHome() {
@@ -27,5 +33,29 @@ public class Configuration implements Serializable {
 
     public String getPagesHome() {
         return home + "pages" + File.separator;
+    }
+
+    public String getTestRunnerClass() {
+        return testRunnerClass;
+    }
+
+    public void setTestRunnerClass(String testRunnerClass) {
+        this.testRunnerClass = testRunnerClass;
+    }
+
+    public String getJavaHome() {
+        return javaHome;
+    }
+
+    public void setJavaHome(String javaHome) {
+        this.javaHome = javaHome;
+    }
+
+    public String getTestExecutorClass() {
+        return testExecutorClass;
+    }
+
+    public void setTestExecutorClass(String testExecutorClass) {
+        this.testExecutorClass = testExecutorClass;
     }
 }

@@ -1,21 +1,13 @@
 package com.salvador.scenarios;
 
+import com.salvador.configuration.Configuration;
 import com.salvador.pages.Page;
 import com.salvador.pages.PageManager;
 import com.salvador.utils.FacesUtils;
-import org.primefaces.component.commandbutton.CommandButton;
-import org.primefaces.component.inputtext.InputText;
-import org.primefaces.component.selectonemenu.SelectOneMenu;
 
 import javax.annotation.PostConstruct;
-import javax.el.MethodExpression;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.component.UISelectItem;
-import javax.faces.component.html.HtmlPanelGrid;
-import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -48,9 +40,12 @@ public class ScenarioBean implements Serializable {
     transient PageManager pageManager;
 
     private String name;
-    private String pagePath;
     private Scenario scenario;
     private List<String> parameters;
+    private Page page;
+
+    @Inject
+    Configuration configuration;
 
     @PostConstruct
     public void init() {
@@ -59,21 +54,19 @@ public class ScenarioBean implements Serializable {
 
     public void createScenario() throws IOException {
 
-        Page page = pageManager.getPage(pagePath);
-
         if (page != null) {
             page.getScenarios().add(scenario);
-            pageManager.save(page);
+            pageManager.save(configuration.getPagesHome(), page);
             conversation.end();
 
             FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath() + page.getName());
         }
     }
 
-    public String addScenarioStep() {
+    public String addScenarioStep() throws IOException {
 
         if (scenario == null) {
-            pagePath = FacesUtils.getParam("page");
+            page = pageManager.getPageFromPageRequestParameter();
             scenario = new Scenario();
             parameters = new ArrayList<String>();
         }
@@ -96,7 +89,7 @@ public class ScenarioBean implements Serializable {
 
         Map<String, String> testParams = new LinkedHashMap<String, String>();
         for (String param : parameters) {
-            String paramValue = (String) externalContext.getRequestParameterMap().get(param);
+            String paramValue = externalContext.getRequestParameterMap().get(param);
             testParams.put(param, paramValue);
         }
 

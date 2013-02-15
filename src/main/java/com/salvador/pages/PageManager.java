@@ -1,6 +1,7 @@
 package com.salvador.pages;
 
 import com.salvador.configuration.Configuration;
+import com.salvador.utils.FacesUtils;
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -20,27 +21,47 @@ public class PageManager {
 
     static final Logger log = LoggerFactory.getLogger(PageManager.class);
 
+    XStream xStream;
+
     @Inject
     Configuration configuration;
-
-    XStream xStream;
 
     public PageManager() {
         xStream = new XStream();
     }
 
-    public Page getPage(String pagePath) throws IOException {
+    public Page getPageFromPageRequestParameter() throws IOException {
+        final Page page =  getPage(configuration.getPagesHome(),FacesUtils.getParam("page"));
+        if(page != null) {
+            setChildren(page);
+        }
 
-        Page page = null;
+        return page;
+    }
+
+    public void setChildren(Page page) throws IOException {
+        List<Page> pages = getPages(page);
+        page.setChildren(pages);
+
+        for(Page childPage : pages) {
+            setChildren(childPage);
+        }
+    }
+
+    public Page getPage(String home, String pagePath) throws IOException {
+
+        Page page = new Page();
 
         if (pagePath != null) {
-            final String filePagePath = configuration.getPagesHome() + getParentPath(pagePath);
+            final String filePagePath = home + getParentPath(pagePath);
             File directory = new File(filePagePath);
             File contentFile = new File(directory.getAbsolutePath() + File.separator + "content.xml");
 
             if (contentFile.exists()) {
                 final FileInputStream inputStream = new FileInputStream(contentFile.getAbsolutePath());
                 page = (Page) xStream.fromXML(inputStream);
+                page.setFullPath(filePagePath);
+                setChildren(page);
                 inputStream.close();
             }
         }
@@ -48,12 +69,15 @@ public class PageManager {
         return page;
     }
 
+    public List<Page> getPages(Page rootPage) throws IOException {
+        return getPages(rootPage.getFullPath());
+    }
+
     public List<Page> getPages(String root) throws IOException {
         List<Page> pages = new ArrayList<Page>();
 
-        final String scanDirectoryPath = configuration.getPagesHome() + root;
-        log.debug("Scanning {} for pages", scanDirectoryPath);
-        File scanDirectory = new File(scanDirectoryPath);
+        log.debug("Scanning {} for pages", root);
+        File scanDirectory = new File(root);
 
         if (scanDirectory.exists()) {
             //noinspection ConstantConditions
@@ -62,6 +86,7 @@ public class PageManager {
                     final FileInputStream inputStream = new FileInputStream(file.getAbsolutePath()
                             + File.separator + "content.xml");
                     Page page = (Page) xStream.fromXML(inputStream);
+                    page.setFullPath(file.getAbsolutePath());
                     pages.add(page);
                     inputStream.close();
                 }
@@ -71,14 +96,14 @@ public class PageManager {
         return pages;
     }
 
-    public void save(Page page) throws IOException {
+    public void save(String home, Page page) throws IOException {
         final String xml = xStream.toXML(page);
         final String parentPath = page.getPath();
         final String cleanPageName = getCleanPageName(page);
-        final String pageDirectoryPath = configuration.getPagesHome() + parentPath + cleanPageName;
+        final String pageDirectoryPath = home + parentPath + cleanPageName;
         log.debug("Creating new page directory {}", pageDirectoryPath);
         FileUtils.forceMkdir(new File(pageDirectoryPath));
-        final String pageFileName = configuration.getPagesHome() + parentPath + cleanPageName + File.separator + "content.xml";
+        final String pageFileName = home + parentPath + cleanPageName + File.separator + "content.xml";
         log.debug("Saving new page to {}", pageFileName);
         FileUtils.writeStringToFile(new File(pageFileName), xml);
     }
@@ -98,8 +123,13 @@ public class PageManager {
             if (!path.endsWith(separator)) {
                 path += separator;
             }
-        }else {
-            path = referer.replace("/", separator);
+        } else {
+            // if we have http then that means we are on the root page
+            if (referer.contains("http")) {
+                path = "";
+            } else {
+                path = referer.replace("/", separator);
+            }
         }
 
         return path;

@@ -12,13 +12,16 @@ public class Page implements Serializable {
 
     private String name;
     private String path;
+    private String fullPath;
     private Date created;
     private boolean enabled;
     private List<Scenario> scenarios;
+    private List<Page> children;
 
     public Page() {
         created = new Date();
         scenarios = new ArrayList<Scenario>();
+        children = new ArrayList<Page>();
         enabled = true;
     }
 
@@ -60,5 +63,21 @@ public class Page implements Serializable {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public List<Page> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Page> children) {
+        this.children = children;
+    }
+
+    public String getFullPath() {
+        return fullPath;
+    }
+
+    public void setFullPath(String fullPath) {
+        this.fullPath = fullPath;
     }
 }
