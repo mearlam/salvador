@@ -120,6 +120,12 @@ public class PageManager {
             final String fullPath = parts[parts.length - 1];
             path = fullPath.replace("/", separator);
 
+            int semi = path.indexOf(";");
+
+            if(semi > 0) {
+                path = path.substring(0,semi);
+            }
+
             if (!path.endsWith(separator)) {
                 path += separator;
             }
