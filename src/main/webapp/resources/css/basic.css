@@ -1,6 +1,7 @@
 html, body {
     font-family: Calibri, Tahoma, FreeSans, Helvetica, Arial, sans-serif;
     font-size: small;
+    background-color: #f0f0f0;
 }
 
 h1 {
@@ -52,7 +53,7 @@ table.scenarioTable td {
 .log {
     width: 100%;
     border: 1px solid #d3d3d3;
-    height: 200px;
+    height: 400px;
     overflow-x: hidden;
     overflow-y: scroll;
 

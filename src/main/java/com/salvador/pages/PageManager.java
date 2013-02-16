@@ -21,6 +21,7 @@ public class PageManager {
     public static final String TEST_FOLDER = "test";
 
     static final Logger log = LoggerFactory.getLogger(PageManager.class);
+    private static final String PAGE_FOLDER = "pages";
 
     XStream xStream;
 
@@ -49,7 +50,7 @@ public class PageManager {
         log.debug("home:{}", home);
         log.debug("page:{}", pagePath);
         Page page = new Page();
-        String filePagePath = home + File.separator + "pages"+ File.separator;
+        String filePagePath = home + File.separator + PAGE_FOLDER + File.separator;
 
         if (StringUtils.isNotEmpty(pagePath)) {
             filePagePath += getParentPath(pagePath);
@@ -105,7 +106,8 @@ public class PageManager {
         final String pageDirectoryPath = home + parentPath + cleanPageName;
         log.debug("Creating new page directory {}", pageDirectoryPath);
         FileUtils.forceMkdir(new File(pageDirectoryPath));
-        final String pageFileName = home + parentPath + cleanPageName + File.separator + "content.xml";
+        final String pageFileName = home + File.separator + PAGE_FOLDER + File.separator +
+                                    parentPath + cleanPageName + File.separator + "content.xml";
         log.debug("Saving new page to {}", pageFileName);
         FileUtils.writeStringToFile(new File(pageFileName), xml);
     }

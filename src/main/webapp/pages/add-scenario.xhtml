@@ -18,7 +18,7 @@
                         <p:inputText value="#{scenarioBean.name}" required="true"/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel header="Steps" styleClass="scenarioContainer">
+                <p:panel header="Steps" styleClass="scenarioContainer" toggleable="true">
                     <h:panelGrid columns="2">
                         <h:outputText value="Type:"/>
                         <p:selectOneMenu value="#{scenarioContentBean.stepType}">
@@ -33,7 +33,7 @@
                         <p:commandButton value="Add" action="#{scenarioBean.addScenarioStep}" update="@form"/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel header="Test Parameters">
+                <p:panel header="Test Parameters" toggleable="true">
                     <table cellpadding="2" cellspacing="0">
                         <ui:repeat value="#{scenarioBean.parameters}" var="parameter">
                             <tr>
@@ -47,7 +47,6 @@
                         </tr>
                     </table>
                 </p:panel>
-
                 <h2>Steps</h2>
                 <table cellpadding="2" cellspacing="0" class="scenarioTable">
                     <ui:repeat value="#{scenarioBean.scenario.steps}" var="step">

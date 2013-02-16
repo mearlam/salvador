@@ -6,18 +6,17 @@
                 template="/WEB-INF/templates/default-layout.xhtml">
 
     <ui:define name="main">
-        <p:breadCrumb model="#{pageBean.menuModel}" style="margin-top:0.5em;" styleClass="breadcrumb"/>
-
-        <h2>Child pages:</h2>
-        <ul>
-            <ui:repeat value="#{pageBean.page.children}" var="page">
-                <li><h:outputLink styleClass="pageLink"
-                                  value="#{request.contextPath}/test/#{page.path}#{page.name}">#{page.name}</h:outputLink>
-                </li>
-            </ui:repeat>
-        </ul>
-
         <h:form>
+
+            <p:breadCrumb model="#{pageBean.menuModel}" style="margin-top:0.5em;" styleClass="breadcrumb"
+                          rendered="#{pageBean.menuModel.contents.size() gt 1}"/>
+            <ul>
+                <ui:repeat value="#{pageBean.page.children}" var="page">
+                    <li><h:outputLink styleClass="pageLink"
+                                      value="#{request.contextPath}/test/#{page.path}#{page.name}">#{page.name}</h:outputLink>
+                    </li>
+                </ui:repeat>
+            </ul>
 
             <ui:repeat value="#{pageBean.page.scenarios}" var="scenario">
                 <p:panel closable="true" toggleable="true" header="#{scenario.name}" id="panel">
