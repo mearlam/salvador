@@ -10,7 +10,7 @@
 
         <h2>Child pages:</h2>
         <ul>
-            <ui:repeat value="#{pageBean.getPages()}" var="page">
+            <ui:repeat value="#{pageBean.page.children}" var="page">
                 <li><h:outputLink styleClass="pageLink"
                                   value="#{request.contextPath}/test/#{page.path}#{page.name}">#{page.name}</h:outputLink>
                 </li>

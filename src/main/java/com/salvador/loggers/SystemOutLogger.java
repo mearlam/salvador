@@ -13,4 +13,9 @@ public class SystemOutLogger implements LogReader {
     public void addLog(String log) {
         System.out.println(log);
     }
+
+    @Override
+    public String getLog() {
+        return "";
+    }
 }

@@ -56,7 +56,7 @@ public class ScenarioBean implements Serializable {
 
         if (page != null) {
             page.getScenarios().add(scenario);
-            pageManager.save(configuration.getPagesHome(), page);
+            pageManager.save(configuration.getHome(), page);
             conversation.end();
 
             FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath() + page.getName());

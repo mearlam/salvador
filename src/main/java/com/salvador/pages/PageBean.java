@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -64,18 +65,7 @@ public class PageBean {
     }
 
     public Page getPage() throws IOException {
-        return pageManager.getPage(configuration.getPagesHome(), FacesUtils.getDestinationPage());
-    }
-
-    private List<Page> getPages() throws IOException {
-        final String requestedUri = FacesUtils.getDestinationPage();
-        String path = "";
-
-        if (requestedUri != null) {
-            path = pageManager.getParentPath(requestedUri);
-        }
-
-        return pageManager.getPages(configuration.getPagesHome() + path);
+        return pageManager.getPage(configuration.getHome(), FacesUtils.getDestinationPage());
     }
 
     public String getPagePath() {
@@ -91,7 +81,7 @@ public class PageBean {
         page.setName(name);
         page.setPath(pageManager.getParentPath(referer, "/"));
         try {
-            pageManager.save(configuration.getPagesHome(), page);
+            pageManager.save(configuration.getHome(), page);
         } catch (IOException e) {
             log.error("Could not save page", e);
         }

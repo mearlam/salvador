@@ -9,4 +9,5 @@ package com.salvador.loggers;
 public interface LogReader {
 
     void addLog(String log);
+    String getLog();
 }

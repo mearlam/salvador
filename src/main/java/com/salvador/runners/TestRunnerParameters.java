@@ -8,10 +8,28 @@ package com.salvador.runners;
  */
 public class TestRunnerParameters {
 
+    private String home;
+    private String page;
     private String javaHome;
     private String javaOptions;
     private String classPath;
     private String executorClass;
+
+    public String getPage() {
+        return page;
+    }
+
+    public void setPage(String page) {
+        this.page = page;
+    }
+
+    public String getHome() {
+        return home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
 
     public String getExecutorClass() {
         return executorClass;

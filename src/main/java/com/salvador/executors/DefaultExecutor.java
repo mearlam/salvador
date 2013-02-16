@@ -34,11 +34,15 @@ public class DefaultExecutor implements TestExecutor {
 
     public static void main(String[] args) {
 
-        if (args.length == 2) {
+        if (args.length == 1) {
+            DefaultExecutor executor = new DefaultExecutor();
+            executor.execute(args[0],null);
+        }
+        else if(args.length == 2) {
             DefaultExecutor executor = new DefaultExecutor();
             executor.execute(args[0],args[1]);
         }else {
-            log.error("You must supply home and page");
+            log.error("You must supply home");
         }
     }
 }

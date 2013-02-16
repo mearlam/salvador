@@ -1,6 +1,7 @@
 package com.salvador.runners;
 
 import com.salvador.configuration.Configuration;
+import com.salvador.loggers.HtmlStringLogger;
 import com.salvador.loggers.LogReader;
 import com.salvador.loggers.SystemOutLogger;
 import com.salvador.pages.Page;
@@ -38,27 +39,51 @@ public class TestRunnerBean implements Serializable {
     @Inject
     transient Configuration configuration;
 
-    private StringBuffer logBuffer = new StringBuffer();
+    private LogReader logReader;
+    private boolean running;
+    TestRunner testRunner;
+
+    private ProcessListener processListener;
 
     public String runTests() throws TestRunnerException {
         try {
             conversation.begin();
+
+            processListener = new ProcessListener() {
+                @Override
+                public void processFinished(Process process) {
+                    if (running) {
+                        log.debug("tests finished");
+                        running = false;
+                    }
+                }
+            };
+
             final Page page = pageManager.getPageFromPageRequestParameter();
 
-            TestRunnerParameters parameters = new TestRunnerParameters();
+            final TestRunnerParameters parameters = new TestRunnerParameters();
             parameters.setJavaHome(configuration.getJavaHome());
             parameters.setExecutorClass(configuration.getTestExecutorClass());
+            parameters.setHome(configuration.getHome());
+            parameters.setPage(page.getName());
             log.info("Running tests with runner '{}'", configuration.getTestRunnerClass());
             log.info("Running tests with executor '{}'", configuration.getTestExecutorClass());
 
-            Class testRunnerClass = Class.forName(configuration.getTestRunnerClass());
-            TestRunner testRunner = (TestRunner) testRunnerClass.newInstance();
-            testRunner.run(parameters, new LogReader() {
-                @Override
-                public void addLog(String log) {
-                    logBuffer.append(log).append(System.getProperty("line.separator"));
+            final Class testRunnerClass = Class.forName(configuration.getTestRunnerClass());
+            testRunner = (TestRunner) testRunnerClass.newInstance();
+
+            logReader = new HtmlStringLogger();
+
+            Thread thread = new Thread() {
+                public void run() {
+                    log.debug("Starting test runner");
+                    testRunner.run(parameters, logReader, processListener);
+                    running = true;
                 }
-            });
+            };
+
+            thread.start();
+
 
         } catch (Exception e) {
             log.error("Could not start tests", e);
@@ -68,9 +93,10 @@ public class TestRunnerBean implements Serializable {
     }
 
     public String getLog() {
-        return logBuffer.toString();
+        return logReader.getLog();
     }
 
-//    public void setLog(String buffer) {
-//    }
+    public boolean isRunning() {
+        return running;
+    }
 }

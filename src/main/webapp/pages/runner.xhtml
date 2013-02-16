@@ -8,10 +8,23 @@
 
     <ui:define name="main">
         <h:form id="form">
-            <p:poll interval="5" update="log" />
+            <p:poll interval="2" update="main" stop="#{not testRunnerBean.running}"/>
 
-            <p:inputTextarea id="log" cols="100" rows="20" value="#{testRunnerBean.log}" disabled="true"
-                    style="width: 100%"/>
+            <h:panelGroup layout="block" id="main">
+                <h:panelGroup layout="block" id="running" rendered="#{testRunnerBean.running}">
+                    Running tests: <h:graphicImage library="images" name="ajax-loader.gif"/>
+                </h:panelGroup>
+                <h:panelGroup layout="block" id="finished" rendered="#{not testRunnerBean.running}">
+                    Finished!
+                </h:panelGroup>
+
+                <h2>Log:</h2>
+
+                <div class="log">
+                    <h:outputText id="log" value="#{testRunnerBean.log}" escape="false"/>
+                </div>
+            </h:panelGroup>
+
         </h:form>
     </ui:define>
 

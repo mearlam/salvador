@@ -10,5 +10,5 @@ import com.salvador.loggers.LogReader;
  */
 public interface TestRunner {
 
-    void run(TestRunnerParameters parameters,LogReader logReader) throws TestRunnerException;
+    void run(TestRunnerParameters parameters,LogReader logReader, ProcessListener processListener) throws TestRunnerException;
 }

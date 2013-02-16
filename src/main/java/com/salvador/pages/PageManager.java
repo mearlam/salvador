@@ -4,6 +4,7 @@ import com.salvador.configuration.Configuration;
 import com.salvador.utils.FacesUtils;
 import com.thoughtworks.xstream.XStream;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,40 +32,41 @@ public class PageManager {
     }
 
     public Page getPageFromPageRequestParameter() throws IOException {
-        final Page page =  getPage(configuration.getPagesHome(),FacesUtils.getParam("page"));
-        if(page != null) {
-            setChildren(page);
-        }
-
-        return page;
+        return getPage(configuration.getHome(), FacesUtils.getParam("page"));
     }
 
     public void setChildren(Page page) throws IOException {
         List<Page> pages = getPages(page);
         page.setChildren(pages);
 
-        for(Page childPage : pages) {
+        for (Page childPage : pages) {
             setChildren(childPage);
         }
     }
 
     public Page getPage(String home, String pagePath) throws IOException {
 
+        log.debug("home:{}", home);
+        log.debug("page:{}", pagePath);
         Page page = new Page();
+        String filePagePath = home + File.separator + "pages"+ File.separator;
 
-        if (pagePath != null) {
-            final String filePagePath = home + getParentPath(pagePath);
-            File directory = new File(filePagePath);
-            File contentFile = new File(directory.getAbsolutePath() + File.separator + "content.xml");
-
-            if (contentFile.exists()) {
-                final FileInputStream inputStream = new FileInputStream(contentFile.getAbsolutePath());
-                page = (Page) xStream.fromXML(inputStream);
-                page.setFullPath(filePagePath);
-                setChildren(page);
-                inputStream.close();
-            }
+        if (StringUtils.isNotEmpty(pagePath)) {
+            filePagePath += getParentPath(pagePath);
         }
+
+        log.debug("looking for page at {}", filePagePath);
+        File directory = new File(filePagePath);
+        File contentFile = new File(directory.getAbsolutePath() + File.separator + "content.xml");
+
+        if (contentFile.exists()) {
+            final FileInputStream inputStream = new FileInputStream(contentFile.getAbsolutePath());
+            page = (Page) xStream.fromXML(inputStream);
+            inputStream.close();
+        }
+
+        page.setFullPath(filePagePath);
+        setChildren(page);
 
         return page;
     }
@@ -122,8 +124,8 @@ public class PageManager {
 
             int semi = path.indexOf(";");
 
-            if(semi > 0) {
-                path = path.substring(0,semi);
+            if (semi > 0) {
+                path = path.substring(0, semi);
             }
 
             if (!path.endsWith(separator)) {

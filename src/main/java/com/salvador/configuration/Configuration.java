@@ -2,7 +2,6 @@ package com.salvador.configuration;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -29,10 +28,6 @@ public class Configuration implements Serializable {
 
     public String getHome() {
         return home;
-    }
-
-    public String getPagesHome() {
-        return home + "pages" + File.separator;
     }
 
     public String getTestRunnerClass() {

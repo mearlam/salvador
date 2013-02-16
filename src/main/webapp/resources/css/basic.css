@@ -13,28 +13,21 @@ h2 {
     margin: 5px;
 }
 
-
-table
-{
-    border-collapse:collapse;
+table {
+    border-collapse: collapse;
 }
 
-table.scenarioTable
-{
+table.scenarioTable {
     border: 1px solid #d3d3d3;
 }
 
-table.scenarioTable th
-{
+table.scenarioTable th {
     border: 1px solid #d3d3d3;
 }
 
-
-table.scenarioTable td
-{
+table.scenarioTable td {
     border: 1px solid #d3d3d3;
 }
-
 
 .scenarioContainer {
     margin-top: 10px;
@@ -54,4 +47,13 @@ table.scenarioTable td
 .breadcrumb {
     background: none;
     border: none;
+}
+
+.log {
+    width: 100%;
+    border: 1px solid #d3d3d3;
+    height: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
 }
