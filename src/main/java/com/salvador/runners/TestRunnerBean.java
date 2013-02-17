@@ -6,6 +6,7 @@ import com.salvador.loggers.LogReader;
 import com.salvador.loggers.SystemOutLogger;
 import com.salvador.pages.Page;
 import com.salvador.pages.PageManager;
+import com.salvador.scenarios.ScenarioStep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,6 +46,7 @@ public class TestRunnerBean implements Serializable {
     TestRunner testRunner;
 
     private ProcessListener processListener;
+    private List<ScenarioStep> stepsRun;
 
     public String runTests() throws TestRunnerException {
         try {
@@ -98,5 +101,13 @@ public class TestRunnerBean implements Serializable {
 
     public boolean isRunning() {
         return running;
+    }
+
+    public List<ScenarioStep> getStepsRun() {
+        return stepsRun;
+    }
+
+    public void setStepsRun(List<ScenarioStep> stepsRun) {
+        this.stepsRun = stepsRun;
     }
 }

@@ -18,6 +18,15 @@
                     Finished!
                 </h:panelGroup>
 
+                <table cellpadding="4" cellspacing="0" class="scenarioTable">
+                    <ui:repeat value="#{scenario.stepsRun}" var="step">
+                        <tr>
+                            <td>#{step.type.name()}</td>
+                            <td>#{step.text}</td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+
                 <h2>Log:</h2>
 
                 <div class="log">

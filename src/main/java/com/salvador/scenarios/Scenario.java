@@ -21,6 +21,7 @@ public class Scenario implements Serializable {
     private List<Map<String,String>> testRows;
     private boolean enabled;
 
+
     public Scenario() {
         steps = new ArrayList<ScenarioStep>();
         testRows = new ArrayList<Map<String, String>>();

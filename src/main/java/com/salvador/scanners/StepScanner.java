@@ -1,5 +1,7 @@
 package com.salvador.scanners;
 
+import com.salvador.scenarios.Scenario;
+
 import java.util.List;
 
 /**
@@ -11,5 +13,6 @@ import java.util.List;
  */
 public interface StepScanner {
 
-    List<Class> scan();
+    List<Class> getStepClasses();
+    void getScenarioSteps(Scenario scenario);
 }

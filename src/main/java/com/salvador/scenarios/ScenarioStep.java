@@ -1,5 +1,8 @@
 package com.salvador.scenarios;
 
+import java.lang.reflect.Method;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: mark
@@ -11,6 +14,7 @@ public class ScenarioStep {
 
     private ScenarioStepType type;
     private String text;
+    private ScenarioStepRunInformation runInformation;
 
     public ScenarioStepType getType() {
         return type;
@@ -26,5 +30,13 @@ public class ScenarioStep {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public ScenarioStepRunInformation getRunInformation() {
+        return runInformation;
+    }
+
+    public void setRunInformation(ScenarioStepRunInformation runInformation) {
+        this.runInformation = runInformation;
     }
 }
