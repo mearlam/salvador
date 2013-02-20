@@ -6,7 +6,11 @@ html, body {
 
 h1 {
     font-size: 1.2em;
+    font-weight: normal;
     margin: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 0.5em;
 }
 
 h2 {
@@ -57,4 +61,17 @@ table.scenarioTable td {
     overflow-x: hidden;
     overflow-y: scroll;
 
+}
+
+.formTable td {
+    padding-left: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.infoContainer {
+    padding: 0.5em;
+}
+
+.info {
+    color: #a9a9a9;
 }

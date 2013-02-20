@@ -1,13 +1,14 @@
 package com.salvador.scenarios;
 
 import com.salvador.configuration.Configuration;
-import com.salvador.pages.Page;
+import com.salvador.pages.PageContent;
 import com.salvador.pages.PageManager;
 import com.salvador.utils.FacesUtils;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -42,7 +43,9 @@ public class ScenarioBean implements Serializable {
     private String name;
     private Scenario scenario;
     private List<String> parameters;
-    private Page page;
+
+    @Inject
+    PageContent pageContent;
 
     @Inject
     Configuration configuration;
@@ -54,19 +57,33 @@ public class ScenarioBean implements Serializable {
 
     public void createScenario() throws IOException {
 
-        if (page != null) {
-            page.getScenarios().add(scenario);
-            pageManager.save(configuration.getHome(), page);
-            conversation.end();
+        if (pageContent.getCurrentPage() != null) {
+            if (validates()) {
+                pageContent.getCurrentPage().getScenarios().add(scenario);
+                pageManager.save(configuration.getHome(), pageContent.getCurrentPage());
+                conversation.end();
 
-            FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath() + page.getName());
+                FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + pageContent.getCurrentPage().getPath() + pageContent.getCurrentPage().getName());
+            }
         }
+    }
+
+    private boolean validates() {
+        boolean valid = true;
+
+        if (scenario == null || scenario.getSteps().isEmpty()) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Validation error",
+                            "You must have at least one step in a scenario"));
+            valid = false;
+        }
+
+        return valid;
     }
 
     public String addScenarioStep() throws IOException {
 
         if (scenario == null) {
-            page = pageManager.getPageFromPageRequestParameter();
             scenario = new Scenario();
             parameters = new ArrayList<String>();
         }

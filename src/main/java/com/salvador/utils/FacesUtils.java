@@ -36,9 +36,12 @@ public abstract class FacesUtils {
     }
 
     public static String getDestinationPage() {
-        return (String)
-                FacesContext.getCurrentInstance().getExternalContext().getRequestMap().
-                        get("javax.servlet.forward.request_uri");
+        String destinationPage = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().
+                get("javax.servlet.forward.request_uri");
+        if(destinationPage != null) {
+            destinationPage.replace("+","-");
+        }
+        return destinationPage;
     }
 
     public static void redirect(String page) {

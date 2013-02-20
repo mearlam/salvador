@@ -1,5 +1,6 @@
 package com.salvador.scenarios;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -8,9 +9,9 @@ import java.util.List;
  * User: mark
  * Date: 12/02/13
  * Time: 20:11
- * To change this template use File | Settings | File Templates.
+ *
  */
-public class ScenarioStep {
+public class ScenarioStep implements Serializable {
 
     private ScenarioStepType type;
     private String text;

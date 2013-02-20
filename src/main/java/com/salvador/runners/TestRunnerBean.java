@@ -41,7 +41,7 @@ public class TestRunnerBean implements Serializable {
     @Inject
     transient Configuration configuration;
 
-    private LogReader logReader;
+    transient private LogReader logReader;
     private boolean running;
     TestRunner testRunner;
 

@@ -20,9 +20,9 @@
         <h:panelGroup id="mainContainer" layout="block">
 
             <h:form id="menu-form">
-                <input type="hidden" name="page" value="#{pageBean.page.path}#{pageBean.page.name}" />
-                <p:menubar>
-                    <p:menuitem value="Home" url="/"/>
+                <input type="hidden" name="page" value="#{pageContent.currentPage.path}#{pageContent.currentPage.name}" />
+                <p:menubar rendered="#{not testRunnerBean.running}">
+                    <p:menuitem value="Home" url="/" />
                     <p:submenu label="Run">
                         <p:menuitem value="Suite" action="#{testRunnerBean.runTests}"/>
                         <p:menuitem value="Test" url="/"/>
@@ -30,6 +30,7 @@
                     <p:submenu label="Add">
                         <p:menuitem value="Page" url="/pages/add-page.xhtml"/>
                         <p:menuitem value="Scenario" url="/pages/add-scenario.xhtml"/>
+                        <p:menuitem value="Method" url="/pages/add-method.xhtml"/>
                     </p:submenu>
                     <p:submenu label="Page">
                         <p:menuitem value="Delete" url="/"/>

@@ -32,6 +32,7 @@
                 <div class="log">
                     <h:outputText id="log" value="#{testRunnerBean.log}" escape="false"/>
                 </div>
+                <p:button value="Done" href="/test/#{pageBean.pagePath}/#{pageBean.name}" />
             </h:panelGroup>
 
         </h:form>

@@ -19,14 +19,16 @@
             </ul>
 
             <ui:repeat value="#{pageBean.page.scenarios}" var="scenario">
-                <p:panel closable="true" toggleable="true" header="#{scenario.name}" id="panel">
+                <p:panel closable="true" toggleable="true" header="#{scenario.name} #{scenario.enabled ? '' : '(Disabled)'}" id="panel">
                     <p:ajax event="close" listener="#{pageBean.handleClose(scenario.name)}" />
                     <f:facet name="options">
                         <p:menu>
                             <p:submenu label="Settings">
-                                <p:menuitem value="Disable"/>
-                                <p:menuitem value="Move Up"/>
-                                <p:menuitem value="Move Down"/>
+                                <p:menuitem value="Edit" update="@form"/>
+                                <p:menuitem value="Enable" disabled="#{scenario.enabled}" action="#{pageBean.handleEnable(scenario.name)}" update="@form"/>
+                                <p:menuitem value="Disable" disabled="#{not scenario.enabled}" action="#{pageBean.handleDisable(scenario.name)}" update="@form"/>
+                                <p:menuitem value="Move Up" action="#{pageBean.handleMoveUp(scenario.name)}" update="@form"/>
+                                <p:menuitem value="Move Down" action="#{pageBean.handleMoveDown(scenario.name)}" update="@form"/>
                             </p:submenu>
                         </p:menu>
                     </f:facet>

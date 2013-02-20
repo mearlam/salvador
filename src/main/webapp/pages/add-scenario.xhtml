@@ -9,17 +9,18 @@
     <ui:define name="main">
         <h:form id="form">
 
-            <h1>Adding to: 'test/#{pageBean.pagePath}'</h1>
-            <input type="hidden" name="page" value="#{pageBean.pagePath}" />
+            <h1>Adding to page 'test/#{pageContent.currentPage.path}#{pageContent.currentPage.name}'</h1>
+
             <h:panelGroup layout="block" style="width: 50%;">
+                <p:messages showDetail="true" />
                 <p:panel header="Details" styleClass="scenarioContainer">
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="2" styleClass="formTable">
                         <h:outputText value="Name:"/>
-                        <p:inputText value="#{scenarioBean.name}" required="true"/>
+                        <p:inputText id="scenario-name" value="#{scenarioBean.name}" required="true" size="50"/>
                     </h:panelGrid>
                 </p:panel>
                 <p:panel header="Steps" styleClass="scenarioContainer" toggleable="true">
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="2" styleClass="formTable">
                         <h:outputText value="Type:"/>
                         <p:selectOneMenu value="#{scenarioContentBean.stepType}">
                             <f:selectItem itemValue="Given" itemLabel="Given"/>
@@ -28,7 +29,7 @@
                             <f:selectItem itemValue="And" itemLabel="And"/>
                         </p:selectOneMenu>
                         <h:outputText value="Domain Step:"/>
-                        <p:inputText size="100" value="#{scenarioContentBean.stepText}" required="true"/>
+                        <p:inputText id="ste-text" size="60" value="#{scenarioContentBean.stepText}" />
                         <h:outputText value="&#160;" escape="false"/>
                         <p:commandButton value="Add" action="#{scenarioBean.addScenarioStep}" update="@form"/>
                     </h:panelGrid>

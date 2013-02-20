@@ -13,7 +13,7 @@
 
             <h:panelGroup layout="block" style="width: 50%;">
                 <p:panel header="Running tests">
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="2" styleClass="formTable">
                         <h:outputText value="Test Runner Class:"/>
                         <p:inputText value="#{configurationBean.configuration.testRunnerClass}" size="50" />
                         <h:outputText value="Test Executor Class:"/>
@@ -23,9 +23,22 @@
                     </h:panelGrid>
                 </p:panel>
 
+                <p:panel header="Environment Variables">
+                    <div class="infoContainer info">You can use these by doing \${VARIABLE_NAME} throughout the application</div>
+                    <h:panelGrid columns="2" styleClass="formTable">
+                        <h:outputText value="Name:"/>
+                        <p:inputText  size="50" />
+                        <h:outputText value="Value:"/>
+                        <p:inputText  size="50" />
+                    </h:panelGrid>
+
+                    <p:commandButton value="Add" />
+
+                </p:panel>
+
                 <div style="text-align: right;">
-                    <p:commandButton value="Save" ajax="false" action="#{configurationBean.update}"/>
-                </div>
+                <p:commandButton value="Save" ajax="false" action="#{configurationBean.update}"/>
+            </div>
 
             </h:panelGroup>
         </h:form>
