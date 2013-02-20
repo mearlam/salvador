@@ -1,0 +1,6 @@
+
+/.idea
+/home
+/target
+/atlassian-ide-plugin.xml
+*.iml
