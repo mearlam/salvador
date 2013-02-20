@@ -20,6 +20,7 @@
 
             <ui:repeat value="#{pageBean.page.scenarios}" var="scenario">
                 <p:panel closable="true" toggleable="true" header="#{scenario.name}" id="panel">
+                    <p:ajax event="close" listener="#{pageBean.handleClose(scenario.name)}" />
                     <f:facet name="options">
                         <p:menu>
                             <p:submenu label="Settings">

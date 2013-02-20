@@ -5,7 +5,6 @@ import com.salvador.annotations.Steps;
 import com.salvador.scenarios.Scenario;
 import com.salvador.scenarios.ScenarioStep;
 import com.salvador.scenarios.ScenarioStepRunInformation;
-import org.junit.Test;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

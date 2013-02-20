@@ -1,6 +1,8 @@
 package com.salvador.pages;
 
 import com.salvador.configuration.Configuration;
+import com.salvador.scenarios.Scenario;
+import com.salvador.spi.ViewScoped;
 import com.salvador.utils.FacesUtils;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.model.DefaultMenuModel;
@@ -8,13 +10,10 @@ import org.primefaces.model.MenuModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.io.Serializable;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,21 +22,20 @@ import java.util.List;
  * Time: 10:01
  */
 @Named
-@RequestScoped
-public class PageBean {
+@ViewScoped
+public class PageBean implements Serializable {
 
     static final Logger log = LoggerFactory.getLogger(PageBean.class);
 
 
     private String name;
-
-    Page page;
-
-    @Inject
-    PageManager pageManager;
+    private Page page;
 
     @Inject
-    Configuration configuration;
+    transient PageManager pageManager;
+
+    @Inject
+    transient Configuration configuration;
 
     public MenuModel getMenuModel() throws IOException {
         MenuModel model = new DefaultMenuModel();
@@ -66,7 +64,11 @@ public class PageBean {
     }
 
     public Page getPage() throws IOException {
-        return pageManager.getPage(configuration.getHome(), FacesUtils.getDestinationPage());
+        if (page == null) {
+            page = pageManager.getPage(configuration.getHome(), FacesUtils.getDestinationPage());
+        }
+
+        return page;
     }
 
     public String getPagePath() {
@@ -78,16 +80,16 @@ public class PageBean {
 
         final String referer = FacesUtils.getParam("referer");
 
-        page = new Page();
-        page.setName(name);
-        page.setPath(pageManager.getParentPath(referer, "/"));
+        Page newPage = new Page();
+        newPage.setName(name);
+        newPage.setPath(pageManager.getParentPath(referer, "/"));
         try {
-            pageManager.save(configuration.getHome(), page);
+            pageManager.save(configuration.getHome(), newPage);
         } catch (IOException e) {
             log.error("Could not save page", e);
         }
 
-        FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath() + page.getName());
+        FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + newPage.getPath() + newPage.getName());
     }
 
     public String getName() {
@@ -96,5 +98,17 @@ public class PageBean {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void handleClose(final String scenarioName) throws IOException {
+        int index = 0;
+        for(Scenario scenario : page.getScenarios()) {
+            if(scenario.getName().equals(scenarioName)) {
+                break;
+            }
+            index++;
+        }
+        page.getScenarios().remove(index);
+        pageManager.save(configuration.getHome(),page);
     }
 }

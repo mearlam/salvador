@@ -20,6 +20,8 @@ public class Page implements Serializable {
 
     public Page() {
         created = new Date();
+        name = "";
+        path = "";
         scenarios = new ArrayList<Scenario>();
         children = new ArrayList<Page>();
         enabled = true;
