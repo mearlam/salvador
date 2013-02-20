@@ -17,9 +17,13 @@
                     <h:panelGrid columns="2" styleClass="formTable">
                         <h:outputText value="Name:"/>
                         <p:inputText id="scenario-name" value="#{scenarioBean.name}" required="true" size="50"/>
+                        <h:outputText value="Notes:"/>
+                        <p:inputTextarea cols="80" value="#{scenarioBean.notes}" />
+                        <h:outputText value="&#160;" escape="false"/>
+                        <h:outputText value="tip: you can add any html tags into the notes" styleClass="info"/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel header="Steps" styleClass="scenarioContainer" toggleable="true">
+                <p:panel header="Steps" styleClass="scenarioContainer">
                     <h:panelGrid columns="2" styleClass="formTable">
                         <h:outputText value="Type:"/>
                         <p:selectOneMenu value="#{scenarioContentBean.stepType}">
@@ -34,7 +38,7 @@
                         <p:commandButton value="Add" action="#{scenarioBean.addScenarioStep}" update="@form"/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel header="Test Parameters" toggleable="true">
+                <p:panel header="Test Parameters">
                     <table cellpadding="2" cellspacing="0">
                         <ui:repeat value="#{scenarioBean.parameters}" var="parameter">
                             <tr>

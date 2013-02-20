@@ -17,6 +17,7 @@ public class Scenario implements Serializable {
 
     private static final long serialVersionUID = -5550557777493406291L;
     private String name;
+    private String notes;
     private List<ScenarioStep> steps;
     private List<Map<String,String>> testRows;
     private boolean enabled;
@@ -58,5 +59,13 @@ public class Scenario implements Serializable {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

@@ -9,22 +9,15 @@
     <ui:define name="main">
         <h:form id="form">
 
-            <input type="hidden" name="referer" value="#{request.getHeader('Referer')}" />
-
             <h:panelGroup layout="block" style="width: 50%;">
-
-                <h1>Adding to page 'test/#{pageContent.currentPage.path}#{pageContent.currentPage.name}'</h1>
-
-                <p:panel header="Details" styleClass="scenarioContainer">
-                    <h:panelGrid columns="2">
-                        <h:outputText value="Name:"/>
-                        <p:inputText value="#{pageBean.page.name}" required="true" />
+                <p:panel header="General">
+                    <h:panelGrid columns="2" styleClass="formTable">
                     </h:panelGrid>
                 </p:panel>
 
                 <div style="text-align: right;">
-                    <p:commandButton value="Create" action="#{pageBean.createPage}" ajax="false"/>
-                </div>
+                <p:commandButton value="Save" ajax="false"/>
+            </div>
 
             </h:panelGroup>
         </h:form>

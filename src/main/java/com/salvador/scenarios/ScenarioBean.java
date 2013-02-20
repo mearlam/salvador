@@ -41,6 +41,7 @@ public class ScenarioBean implements Serializable {
     transient PageManager pageManager;
 
     private String name;
+    private String notes;
     private Scenario scenario;
     private List<String> parameters;
 
@@ -88,6 +89,7 @@ public class ScenarioBean implements Serializable {
             parameters = new ArrayList<String>();
         }
         scenario.setName(name);
+        scenario.setNotes(notes);
 
         ScenarioStep step = new ScenarioStep();
         step.setType(scenarioContentBean.getStepType());
@@ -150,5 +152,11 @@ public class ScenarioBean implements Serializable {
         this.name = name;
     }
 
+    public String getNotes() {
+        return notes;
+    }
 
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
 }

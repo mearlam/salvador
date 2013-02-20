@@ -64,6 +64,7 @@ table.scenarioTable td {
 }
 
 .formTable td {
+    vertical-align: top;
     padding-left: 0.5em;
     padding-bottom: 0.5em;
 }

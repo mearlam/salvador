@@ -3,27 +3,24 @@
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui"
-        xmlns:f="http://java.sun.com/jsf/core"
         template="/WEB-INF/templates/default-layout.xhtml">
 
     <ui:define name="main">
         <h:form id="form">
 
-            <input type="hidden" name="referer" value="#{request.getHeader('Referer')}" />
-
             <h:panelGroup layout="block" style="width: 50%;">
 
-                <h1>Adding to page 'test/#{pageContent.currentPage.path}#{pageContent.currentPage.name}'</h1>
+                <h1>Updating 'test/#{pageContent.currentPage.path}#{pageContent.currentPage.name}'</h1>
 
                 <p:panel header="Details" styleClass="scenarioContainer">
                     <h:panelGrid columns="2">
                         <h:outputText value="Name:"/>
-                        <p:inputText value="#{pageBean.page.name}" required="true" />
+                        <p:inputText value="#{pageEditBean.page.name}" required="true" />
                     </h:panelGrid>
                 </p:panel>
 
                 <div style="text-align: right;">
-                    <p:commandButton value="Create" action="#{pageBean.createPage}" ajax="false"/>
+                    <p:commandButton value="Update" action="#{pageEditBean.updatePage}" ajax="false"/>
                 </div>
 
             </h:panelGroup>

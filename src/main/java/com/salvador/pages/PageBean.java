@@ -66,27 +66,25 @@ public class PageBean implements Serializable {
             String path = "";
 
             if (requestedUri != null) {
-                for(Page page : pageContent.getCurrentPage().getChildren()) {
+
+                path = pageManager.getParentPath(requestedUri, "/");
+                final String[] pages = path.split("/");
+                String currentPath = "/" + PageManager.TEST_FOLDER + "/";
+                for (String page : pages) {
+                    currentPath += page + "/";
                     MenuItem item = new MenuItem();
-                    item.setValue(page.getName());
-                    item.setUrl(page.getPath() + page.getName());
+                    item.setValue(page);
+                    item.setUrl(currentPath);
                     model.addMenuItem(item);
                 }
-
-//                path = pageManager.getParentPath(requestedUri, "/");
-//                final String[] pages = path.split("/");
-//                String currentPath = "/" + PageManager.TEST_FOLDER + "/";
-//                for (String page : pages) {
-//                    currentPath += page + "/";
-//                    MenuItem item = new MenuItem();
-//                    item.setValue(page);
-//                    item.setUrl(currentPath);
-//                    model.addMenuItem(item);
-//                }
             }
         }
 
         return model;
+    }
+
+    public void setPage(Page page) {
+        this.page = page;
     }
 
     public Page getPage() throws IOException {
@@ -102,25 +100,14 @@ public class PageBean implements Serializable {
 
         final String referer = FacesUtils.getParam("referer");
 
-        Page newPage = new Page();
-        newPage.setName(name);
-        newPage.setPath(pageManager.getParentPath(referer, "/"));
+        page.setPath(pageManager.getParentPath(referer, "/"));
         try {
-            pageManager.save(configuration.getHome(), newPage);
+            pageManager.save(configuration.getHome(), page);
         } catch (IOException e) {
             log.error("Could not save page", e);
         }
 
-        pageContent.setCurrentPage(newPage);
-        FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + newPage.getPath() + newPage.getName());
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath() + page.getName());
     }
 
     public void handleClose(final String scenarioName) throws IOException {

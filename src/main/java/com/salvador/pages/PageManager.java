@@ -64,6 +64,8 @@ public class PageManager {
             final FileInputStream inputStream = new FileInputStream(contentFile.getAbsolutePath());
             page = (Page) xStream.fromXML(inputStream);
             inputStream.close();
+        }else {
+            page.setRootPage(true);
         }
 
         page.setFullPath(filePagePath);
@@ -103,11 +105,23 @@ public class PageManager {
         final String xml = xStream.toXML(page);
         final String parentPath = page.getPath();
         final String cleanPageName = getCleanPageName(page);
-        final String pageDirectoryPath = home + parentPath + cleanPageName;
+        final String pageDirectoryPath = home + PAGE_FOLDER + File.separator + parentPath + cleanPageName;
         log.debug("Creating new page directory {}", pageDirectoryPath);
         FileUtils.forceMkdir(new File(pageDirectoryPath));
         final String pageFileName = home + File.separator + PAGE_FOLDER + File.separator +
-                                    parentPath + cleanPageName + File.separator + "content.xml";
+                parentPath + cleanPageName + File.separator + "content.xml";
+        log.debug("Saving new page to {}", pageFileName);
+        FileUtils.writeStringToFile(new File(pageFileName), xml);
+    }
+
+    public void update(String home, Page page) throws IOException {
+        final String xml = xStream.toXML(page);
+        final String parentPath = page.getPath();
+        final String cleanPageName = getCleanPageName(page);
+        final String pageDirectoryPath = home + PAGE_FOLDER + File.separator + parentPath + cleanPageName;
+        String pageFileName = pageDirectoryPath + File.separator + "content.xml";
+        log.debug("Moving page directory from {} to {}", page.getFullPath(), pageDirectoryPath);
+        FileUtils.moveDirectory(new File(page.getFullPath()), new File(pageDirectoryPath));
         log.debug("Saving new page to {}", pageFileName);
         FileUtils.writeStringToFile(new File(pageFileName), xml);
     }

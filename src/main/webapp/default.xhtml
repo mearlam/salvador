@@ -32,6 +32,7 @@
                             </p:submenu>
                         </p:menu>
                     </f:facet>
+                    <div class="infoContainer info"><h:outputText escape="false" value="#{scenario.notes}"/></div>
                     <table cellpadding="4" cellspacing="0" class="scenarioTable">
                         <ui:repeat value="#{scenario.steps}" var="step">
                             <tr>

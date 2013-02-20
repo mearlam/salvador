@@ -15,6 +15,7 @@ public class Page implements Serializable {
     private String fullPath;
     private Date created;
     private boolean enabled;
+    private boolean isRootPage;
     private List<Scenario> scenarios;
     private List<Page> children;
 
@@ -81,5 +82,13 @@ public class Page implements Serializable {
 
     public void setFullPath(String fullPath) {
         this.fullPath = fullPath;
+    }
+
+    public boolean isRootPage() {
+        return isRootPage;
+    }
+
+    public void setRootPage(boolean rootPage) {
+        isRootPage = rootPage;
     }
 }
