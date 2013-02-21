@@ -74,11 +74,11 @@ public class PageManager {
         return page;
     }
 
-    public List<Page> getPages(Page rootPage) throws IOException {
+    protected List<Page> getPages(Page rootPage) throws IOException {
         return getPages(rootPage.getFullPath());
     }
 
-    public List<Page> getPages(String root) throws IOException {
+    protected List<Page> getPages(String root) throws IOException {
         List<Page> pages = new ArrayList<Page>();
 
         log.debug("Scanning {} for pages", root);
@@ -124,6 +124,11 @@ public class PageManager {
         FileUtils.moveDirectory(new File(page.getFullPath()), new File(pageDirectoryPath));
         log.debug("Saving new page to {}", pageFileName);
         FileUtils.writeStringToFile(new File(pageFileName), xml);
+    }
+
+    public void delete(Page page) throws IOException {
+        log.debug("Deleting page {}", page.getFullPath());
+        FileUtils.forceDelete(new File((page.getFullPath())));
     }
 
     public String getParentPath(String referer) {

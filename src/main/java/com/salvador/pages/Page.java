@@ -17,7 +17,7 @@ public class Page implements Serializable {
     private boolean enabled;
     private boolean isRootPage;
     private List<Scenario> scenarios;
-    private List<Page> children;
+    private transient List<Page> children;
 
     public Page() {
         created = new Date();
