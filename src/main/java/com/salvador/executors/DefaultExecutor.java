@@ -40,7 +40,7 @@ public class DefaultExecutor implements TestExecutor {
         try {
             final Page page = pageManager.getPage(home, pagePath);
             log.info("Test page: '{}'", page.getFullPath());
-            log.info("Scenarios: '{}'", page.getScenarios().size());
+            log.info("Scenarios: '{}'", page.getItems(Scenario.class).size());
             log.info("Child pages: '{}'", page.getChildren().size());
             getScenarios(page);
             log.info("Scenarios to run {}", scenarios.size());
@@ -77,7 +77,7 @@ public class DefaultExecutor implements TestExecutor {
 
     private void getScenarios(Page page) {
 
-        scenarios.addAll(page.getScenarios());
+        scenarios.addAll(page.getItems(Scenario.class));
 
         for(Page childPage: page.getChildren()) {
             getScenarios(childPage);

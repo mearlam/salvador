@@ -18,12 +18,16 @@
                 <p:panel header="Details">
                     <h:panelGrid columns="2" styleClass="formTable">
                         <h:outputText value="Name:"/>
-                        <p:inputText value="#{pageBean.page.name}" required="true" size="40" />
+                        <p:inputText value="#{pageNoteBean.note.name}" required="true" size="40" />
+                        <h:outputText value="&#160;"/>
+                        <p:editor value="#{pageNoteBean.note.text}" required="true" />
+                        <h:outputText value="&#160;" escape="false"/>
+                        <h:outputText value="tip: you can add any html tags into the notes" styleClass="info"/>
                     </h:panelGrid>
                 </p:panel>
 
                 <div style="text-align: right;">
-                    <p:commandButton value="Create" action="#{pageBean.createPage}" ajax="false"/>
+                    <p:commandButton value="Create" action="#{pageNoteBean.createNote}" ajax="false"/>
                 </div>
 
             </h:panelGroup>

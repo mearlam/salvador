@@ -29,13 +29,14 @@
                     </p:submenu>
                     <p:submenu label="Add">
                         <p:menuitem value="Page" url="/pages/add-page.xhtml"/>
-                        <p:menuitem value="Scenario" url="/pages/add-scenario.xhtml" disabled="#{pageContent.currentPage.rootPage}"/>
+                        <p:menuitem value="Scenario" url="/pages/add-scenario.xhtml" />
+                        <p:menuitem value="Note" url="/pages/add-note.xhtml" />
                         <p:menuitem value="Method" url="/pages/add-method.xhtml"/>
                     </p:submenu>
                     <p:submenu label="Page">
-                        <p:menuitem value="Edit" url="/pages/edit-page.xhtml" disabled="#{pageContent.currentPage.rootPage}"/>
-                        <p:menuitem value="Options" url="/pages/page-options.xhtml" disabled="#{pageContent.currentPage.rootPage}"/>
-                        <p:menuitem value="Delete" url="/" disabled="#{pageContent.currentPage.rootPage}"/>
+                        <p:menuitem value="Edit" url="/pages/edit-page.xhtml" />
+                        <p:menuitem value="Options" url="/pages/page-options.xhtml"/>
+                        <p:menuitem value="Delete" url="/" />
                     </p:submenu>
                     <p:submenu label="Administation">
                         <p:menuitem value="General" url="/pages/admin.xhtml"/>

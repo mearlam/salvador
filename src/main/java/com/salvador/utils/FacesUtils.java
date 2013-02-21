@@ -1,5 +1,7 @@
 package com.salvador.utils;
 
+import com.salvador.pages.Page;
+import com.salvador.pages.PageManager;
 import com.sun.deploy.net.HttpRequest;
 
 import javax.faces.context.ExternalContext;
@@ -56,6 +58,10 @@ public abstract class FacesUtils {
                 }
             }
         }
+    }
+
+    public static void redirect(Page page) {
+        FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath() + page.getName());
     }
 
     public static void refreshPage() {

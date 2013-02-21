@@ -16,24 +16,25 @@ public class Page implements Serializable {
     private Date created;
     private boolean enabled;
     private boolean isRootPage;
-    private List<Scenario> scenarios;
+    private List<PageItem> items;
     private transient List<Page> children;
+    private List<Scenario> scenarios;
 
     public Page() {
         created = new Date();
         name = "";
         path = "";
-        scenarios = new ArrayList<Scenario>();
+        items = new ArrayList<PageItem>();
         children = new ArrayList<Page>();
         enabled = true;
     }
 
-    public List<Scenario> getScenarios() {
-        return scenarios;
+    public List<PageItem> getItems() {
+        return items;
     }
 
-    public void setScenarios(List<Scenario> scenarios) {
-        this.scenarios = scenarios;
+    public void setItems(List<PageItem> items) {
+        this.items = items;
     }
 
     public String getName() {
@@ -90,5 +91,26 @@ public class Page implements Serializable {
 
     public void setRootPage(boolean rootPage) {
         isRootPage = rootPage;
+    }
+
+    public <T> List<T> getItems(Class<T> clazz) {
+        List<T> tempItems = new ArrayList<T>();
+        for(PageItem item : items) {
+            if(item.getClass().equals(clazz)) {
+                tempItems.add((T)item);
+            }
+        }
+
+        return tempItems;
+    }
+
+    public PageItem getItem(String name) {
+        for(PageItem item : items) {
+            if(item.getName().equals(name)) {
+                return item;
+            }
+        }
+
+        return null;
     }
 }

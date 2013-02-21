@@ -1,6 +1,7 @@
 package com.salvador.pages;
 
 import com.salvador.configuration.Configuration;
+import com.salvador.items.ItemManager;
 import com.salvador.scenarios.Scenario;
 import com.salvador.scenarios.ScenarioManager;
 import com.salvador.spi.ViewScoped;
@@ -43,7 +44,7 @@ public class PageBean implements Serializable {
     transient Configuration configuration;
 
     @Inject
-    transient ScenarioManager scenarioManager;
+    transient ItemManager itemManager;
 
     @PostConstruct
     public void initPage() throws IOException {
@@ -110,28 +111,28 @@ public class PageBean implements Serializable {
         FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath() + page.getName());
     }
 
-    public void handleClose(final String scenarioName) throws IOException {
-        page.getScenarios().remove(scenarioManager.getScenario(page, scenarioName));
+    public void handleClose(final String itemName) throws IOException {
+        page.getItems().remove(page.getItem(itemName));
         pageManager.save(configuration.getHome(), page);
     }
 
-    public void handleEnable(final String scenarioName) throws IOException {
-        scenarioManager.getScenario(page, scenarioName).setEnabled(true);
+    public void handleEnable(final String itemName) throws IOException {
+        page.getItem(itemName).setEnabled(true);
         pageManager.save(configuration.getHome(), page);
     }
 
-    public void handleDisable(final String scenarioName) throws IOException {
-        scenarioManager.getScenario(page, scenarioName).setEnabled(false);
+    public void handleDisable(final String itemName) throws IOException {
+        page.getItem(itemName).setEnabled(false);
         pageManager.save(configuration.getHome(), page);
     }
 
-    public void handleMoveUp(final String scenarioName) throws IOException {
-        scenarioManager.moveScenarioUp(page, scenarioName);
+    public void handleMoveUp(final String itemName) throws IOException {
+        itemManager.moveItemUp(page, itemName);
         pageManager.save(configuration.getHome(), page);
     }
 
-    public void handleMoveDown(final String scenarioName) throws IOException {
-        scenarioManager.moveScenarioDown(page, scenarioName);
+    public void handleMoveDown(final String itemName) throws IOException {
+        itemManager.moveItemDown(page, itemName);
         pageManager.save(configuration.getHome(), page);
     }
 }

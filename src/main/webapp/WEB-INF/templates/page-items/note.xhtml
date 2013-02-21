@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <p:panel closable="true" toggleable="true" header="#{item.name}" id="note-panel">
+        <p:ajax event="close" listener="#{pageBean.handleClose(item.name)}"/>
+        <f:facet name="options">
+            <p:menu>
+                <p:submenu label="Settings">
+                    <p:menuitem value="Edit" update="@form"/>
+                    <p:menuitem value="Move Up" action="#{pageBean.handleMoveUp(item.name)}" update="@form"/>
+                    <p:menuitem value="Move Down" action="#{pageBean.handleMoveDown(item.name)}" update="@form"/>
+                </p:submenu>
+            </p:menu>
+        </f:facet>
+
+        <div class="infoContainer info"><h:outputText value="#{item.text}" escape="false"/></div>
+    </p:panel>
+
+</ui:composition>
