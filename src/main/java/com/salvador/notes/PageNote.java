@@ -14,6 +14,10 @@ public class PageNote extends PageItem {
 
     private String text;
 
+    public PageNote() {
+        setCanBeDisabled(false);
+    }
+
     public String getText() {
         return text;
     }

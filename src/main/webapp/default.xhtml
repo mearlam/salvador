@@ -27,6 +27,14 @@
                 </h:panelGroup>
             </ui:repeat>
 
+            <div style="text-align: right;margin-bottom: 10px;">
+                <p:commandButton action="#{pageBean.setEditMode(true)}" value="Show Controls" update="@form"
+                                 rendered="#{!pageBean.editMode}"/>
+                <p:commandButton action="#{pageBean.setEditMode(false)}" value="Hide controls" update="@form"
+                                 rendered="#{pageBean.editMode}"/>
+            </div>
+
+
         </h:form>
 
 

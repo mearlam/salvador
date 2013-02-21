@@ -10,12 +10,14 @@
             <tr>
                 <td><h:outputText value="#{item.text}" escape="false"/></td>
                 <td style="text-align: right">
-                    <ui:include src="actions.xhtml"/>
+                    <h:panelGroup rendered="#{pageBean.editMode}">
+                        <ui:include src="actions.xhtml"/>
+                    </h:panelGroup>
                 </td>
             </tr>
 
         </table>
-        <hr />
+        <hr/>
     </h:panelGroup>
 
 </ui:composition>

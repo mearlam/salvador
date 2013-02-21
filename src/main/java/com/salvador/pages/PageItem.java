@@ -16,9 +16,11 @@ public class PageItem implements Serializable {
 
     private String name;
     private boolean enabled;
+    private boolean canBeDisabled;
 
     public PageItem() {
         enabled = true;
+        canBeDisabled = true;
     }
 
     public String getName() {
@@ -35,5 +37,13 @@ public class PageItem implements Serializable {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean isCanBeDisabled() {
+        return canBeDisabled;
+    }
+
+    public void setCanBeDisabled(boolean canBeDisabled) {
+        this.canBeDisabled = canBeDisabled;
     }
 }

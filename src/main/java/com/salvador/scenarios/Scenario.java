@@ -27,6 +27,7 @@ public class Scenario extends PageItem {
     public Scenario() {
         steps = new ArrayList<ScenarioStep>();
         testRows = new ArrayList<Map<String, String>>();
+        setCanBeDisabled(true);
     }
 
     public List<ScenarioStep> getSteps() {

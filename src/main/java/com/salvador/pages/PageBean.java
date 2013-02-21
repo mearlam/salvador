@@ -36,6 +36,7 @@ public class PageBean implements Serializable {
     // used for bulk add
     private String names;
     private Page page;
+    private boolean editMode;
 
     @Inject
     transient PageContent pageContent;
@@ -51,6 +52,7 @@ public class PageBean implements Serializable {
 
     @PostConstruct
     public void initPage() throws IOException {
+        editMode = false;
         if (page == null) {
             page = pageManager.getPage(configuration.getHome(), FacesUtils.getDestinationPage());
             pageContent.setCurrentPage(page);
@@ -95,6 +97,14 @@ public class PageBean implements Serializable {
 
     public Page getPage() throws IOException {
         return page;
+    }
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 
     public void createPage() throws IOException {

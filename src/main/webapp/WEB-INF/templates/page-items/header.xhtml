@@ -7,11 +7,13 @@
         <tr>
             <td><h1><h:outputText value="#{item.name} #{item.enabled ? '' : '(Disabled)'}"/></h1></td>
             <td style="text-align: right">
-                <ui:include src="actions.xhtml"/>
+                <h:panelGroup rendered="#{pageBean.editMode}">
+                    <ui:include src="actions.xhtml"/>
+                </h:panelGroup>
             </td>
         </tr>
 
     </table>
-    <hr />
+    <hr/>
 
 </ui:composition>
