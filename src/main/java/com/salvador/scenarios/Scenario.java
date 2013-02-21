@@ -1,5 +1,6 @@
 package com.salvador.scenarios;
 
+import com.salvador.common.annotations.AutoTest;
 import com.salvador.pages.PageItem;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.util.Map;
  * Time: 20:10
  *
  */
+@AutoTest
 public class Scenario extends PageItem {
 
 

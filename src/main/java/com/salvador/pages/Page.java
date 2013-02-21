@@ -1,10 +1,14 @@
 package com.salvador.pages;
 
+import com.salvador.common.annotations.AutoTest;
+import com.salvador.common.annotations.SkipAutoTest;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@AutoTest
 public class Page implements Serializable {
 
     private String name;
@@ -41,6 +45,7 @@ public class Page implements Serializable {
         this.name = name;
     }
 
+    @SkipAutoTest
     public Date getCreated() {
         return created;
     }
@@ -98,7 +103,7 @@ public class Page implements Serializable {
 
     public PageItem getItem(String name) {
         for(PageItem item : items) {
-            if(item.getName().equals(name)) {
+            if(item.getName() != null && item.getName().equals(name)) {
                 return item;
             }
         }

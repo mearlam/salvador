@@ -1,5 +1,7 @@
 package com.salvador.pages;
 
+import com.salvador.common.annotations.AutoTest;
+
 import java.io.Serializable;
 import java.lang.String;
 
@@ -9,6 +11,7 @@ import java.lang.String;
  * Date: 21/02/13
  * Time: 04:07
  */
+@AutoTest
 public class PageItem implements Serializable {
 
     private String name;

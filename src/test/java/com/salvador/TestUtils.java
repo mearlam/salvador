@@ -1,5 +1,7 @@
 package com.salvador;
 
+import org.junit.Ignore;
+
 import java.io.File;
 
 /**
@@ -8,7 +10,8 @@ import java.io.File;
  * Date: 21/02/13
  * Time: 03:48
  */
-public class TestUtils {
+@Ignore
+public abstract class TestUtils {
 
     public static String getTestResourcesDirectory() {
         String directory = "";

@@ -1,5 +1,8 @@
 package com.salvador.scenarios;
 
+import com.salvador.common.annotations.AutoTest;
+import com.salvador.common.annotations.SkipAutoTest;
+
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -11,6 +14,7 @@ import java.util.List;
  * Time: 20:11
  *
  */
+@AutoTest
 public class ScenarioStep implements Serializable {
 
     private ScenarioStepType type;
@@ -21,6 +25,7 @@ public class ScenarioStep implements Serializable {
         return type;
     }
 
+    @SkipAutoTest
     public void setType(String type) {
         this.type = Enum.valueOf(ScenarioStepType.class,type);
     }

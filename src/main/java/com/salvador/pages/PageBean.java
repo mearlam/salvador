@@ -6,6 +6,7 @@ import com.salvador.scenarios.Scenario;
 import com.salvador.scenarios.ScenarioManager;
 import com.salvador.spi.ViewScoped;
 import com.salvador.utils.FacesUtils;
+import org.apache.commons.lang.StringUtils;
 import org.primefaces.component.menuitem.MenuItem;
 import org.primefaces.model.DefaultMenuModel;
 import org.primefaces.model.MenuModel;
@@ -31,7 +32,9 @@ public class PageBean implements Serializable {
     static final Logger log = LoggerFactory.getLogger(PageBean.class);
 
     private MenuModel model;
-    private String name;
+
+    // used for bulk add
+    private String names;
     private Page page;
 
     @Inject
@@ -69,14 +72,16 @@ public class PageBean implements Serializable {
             if (requestedUri != null) {
 
                 path = pageManager.getParentPath(requestedUri, "/");
-                final String[] pages = path.split("/");
-                String currentPath = "/" + PageManager.TEST_FOLDER + "/";
-                for (String page : pages) {
-                    currentPath += page + "/";
-                    MenuItem item = new MenuItem();
-                    item.setValue(page);
-                    item.setUrl(currentPath);
-                    model.addMenuItem(item);
+                if (path != null) {
+                    final String[] pages = path.split("/");
+                    String currentPath = "/" + PageManager.TEST_FOLDER + "/";
+                    for (String page : pages) {
+                        currentPath += page + "/";
+                        MenuItem item = new MenuItem();
+                        item.setValue(page);
+                        item.setUrl(currentPath);
+                        model.addMenuItem(item);
+                    }
                 }
             }
         }
@@ -92,23 +97,41 @@ public class PageBean implements Serializable {
         return page;
     }
 
-    public String getPagePath() {
-        final String referer = FacesUtils.getHttpHeader("Referer");
-        return pageManager.getParentPath(referer, "/");
-    }
-
-    public void createPage() {
+    public void createPage() throws IOException {
 
         final String referer = FacesUtils.getParam("referer");
 
-        page.setPath(pageManager.getParentPath(referer, "/"));
-        try {
-            pageManager.save(configuration.getHome(), page);
-        } catch (IOException e) {
-            log.error("Could not save page", e);
+        if (StringUtils.isNotEmpty(names)) {
+            Page newPage = new Page();
+            for (String pageName : names.split(",")) {
+                if (!isDuplicate(pageName)) {
+                    newPage.setName(pageName);
+                    newPage.setPath(pageManager.getParentPath(referer, "/"));
+                    pageManager.save(configuration.getHome(), newPage);
+                }
+            }
+        } else if (StringUtils.isNotEmpty(page.getName())) {
+            if (!isDuplicate(page.getName())) {
+                page.setPath(pageManager.getParentPath(referer, "/"));
+                pageManager.save(configuration.getHome(), page);
+            }
         }
 
-        FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath() + page.getName());
+        FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath());
+    }
+
+    private boolean isDuplicate(String pageName) {
+        boolean isDuplicate = false;
+        try {
+            if (StringUtils.isNotEmpty(pageManager.getPage(configuration.getHome(),
+                    pageContent.getCurrentPage().getPath() + pageName).getName())) {
+                isDuplicate = true;
+            }
+        } catch (IOException e) {
+            isDuplicate = false;
+        }
+
+        return isDuplicate;
     }
 
     public void handleClose(final String itemName) throws IOException {
@@ -134,5 +157,13 @@ public class PageBean implements Serializable {
     public void handleMoveDown(final String itemName) throws IOException {
         itemManager.moveItemDown(page, itemName);
         pageManager.save(configuration.getHome(), page);
+    }
+
+    public String getNames() {
+        return names;
+    }
+
+    public void setNames(String names) {
+        this.names = names;
     }
 }

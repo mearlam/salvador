@@ -64,7 +64,7 @@ public class PageManager {
             final FileInputStream inputStream = new FileInputStream(contentFile.getAbsolutePath());
             page = (Page) xStream.fromXML(inputStream);
             inputStream.close();
-        }else {
+        } else {
             page.setRootPage(true);
         }
 

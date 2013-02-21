@@ -18,7 +18,12 @@
                 <p:panel header="Details">
                     <h:panelGrid columns="2" styleClass="formTable">
                         <h:outputText value="Name:"/>
-                        <p:inputText value="#{pageBean.page.name}" required="true" size="40" />
+                        <p:inputText value="#{pageBean.page.name}" size="40" />
+                        <h:outputText value="Bulk add:"/>
+                        <p:inputTextarea cols="80" value="#{pageBean.names}" />
+                        <h:outputText value="&#160;" escape="false"/>
+                        <h:outputText value="tip: add a list of pages to create seperated by commas"
+                                                                                styleClass="info"/>
                     </h:panelGrid>
                 </p:panel>
 

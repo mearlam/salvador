@@ -2,6 +2,7 @@ package test.steps;
 
 import com.salvador.annotations.Step;
 import com.salvador.annotations.Steps;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -12,6 +13,7 @@ import org.junit.Test;
  *
  */
 @Steps
+@Ignore
 public class TestStep {
 
     @Step("this is a step with no param")
