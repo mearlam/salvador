@@ -4,19 +4,18 @@
                 xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html">
 
 
-    <p:panel closable="true" toggleable="true" header="#{item.name}" id="note-panel">
-        <p:ajax event="close" listener="#{pageBean.handleClose(item.name)}"/>
-        <f:facet name="options">
-            <p:menu>
-                <p:submenu label="Settings">
-                    <p:menuitem value="Edit" update="@form"/>
-                    <p:menuitem value="Move Up" action="#{pageBean.handleMoveUp(item.name)}" update="@form"/>
-                    <p:menuitem value="Move Down" action="#{pageBean.handleMoveDown(item.name)}" update="@form"/>
-                </p:submenu>
-            </p:menu>
-        </f:facet>
+    <h:panelGroup layout="block" id="note-panel" styleClass="itemContainer">
 
-        <div class="infoContainer info"><h:outputText value="#{item.text}" escape="false"/></div>
-    </p:panel>
+        <table width="100%" class="itemTable">
+            <tr>
+                <td><h:outputText value="#{item.text}" escape="false"/></td>
+                <td style="text-align: right">
+                    <ui:include src="actions.xhtml"/>
+                </td>
+            </tr>
+
+        </table>
+        <hr />
+    </h:panelGroup>
 
 </ui:composition>

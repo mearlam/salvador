@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div>
+        <p:commandButton icon="ui-icon-arrowthick-1-n"
+                         action="#{pageBean.handleMoveUp(item.name)}"
+                         update="@form"
+                         title="Move this item up"
+                         styleClass="small-button"/>
+        <p:commandButton icon="ui-icon-arrowthick-1-s"
+                         action="#{pageBean.handleMoveDown(item.name)}"
+                         update="@form"
+                         title="Move this item down"
+                         styleClass="small-button"/>
+        <p:commandButton icon="ui-icon-check"
+                         action="#{pageBean.handleEnable(item.name)}"
+                         update="@form"
+                         title="Enable this item"
+                         styleClass="small-button"/>
+        <p:commandButton icon="ui-icon-pause"
+                         action="#{pageBean.handleDisable(item.name)}"
+                         update="@form"
+                         title="Disable this item"
+                         styleClass="small-button"/>
+        <p:commandButton icon="ui-icon-closethick"
+                         action="#{pageBean.handleClose(item.name)}"
+                         update="@form"
+                         title="Delete his item from the page"
+                         styleClass="small-button"/>
+    </div>
+
+</ui:composition>

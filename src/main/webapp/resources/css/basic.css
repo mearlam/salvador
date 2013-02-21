@@ -5,17 +5,21 @@ html, body {
 }
 
 h1 {
-    font-size: 1.2em;
+    font-size: 1.4em;
     font-weight: normal;
     margin: 0;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    margin-left: 0.5em;
+    margin-top: 0.1em;
+    margin-bottom: 0.2em;
+    margin-left: 0.2em;
 }
 
 h2 {
     font-size: 1.2em;
     margin: 5px;
+}
+
+hr {
+    border: 1px solid  #d3d3d3;
 }
 
 table {
@@ -74,5 +78,28 @@ table.scenarioTable td {
 }
 
 .info {
-    color: #a9a9a9;
+    color: #696969;
+}
+
+.itemContainer {
+    background-color: white;
+}
+
+.contentContainer {
+    padding: 1em;
+    border: 1px solid red;
+}
+
+.ui-icon {
+    display: inline-block;
+}
+
+.small-button, .ui-button-icon-only  {
+    width: 20px;
+    height: 20px;
+
+}
+
+.itemTable td{
+    vertical-align: top;
 }

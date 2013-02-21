@@ -1,8 +1,5 @@
 package com.salvador.pages;
 
-import com.salvador.scenarios.Scenario;
-
-import javax.enterprise.context.RequestScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +15,6 @@ public class Page implements Serializable {
     private boolean isRootPage;
     private List<PageItem> items;
     private transient List<Page> children;
-    private List<Scenario> scenarios;
 
     public Page() {
         created = new Date();
@@ -47,10 +43,6 @@ public class Page implements Serializable {
 
     public Date getCreated() {
         return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
     }
 
     public String getPath() {

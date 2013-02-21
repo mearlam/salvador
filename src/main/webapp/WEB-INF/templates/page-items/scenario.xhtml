@@ -1,51 +1,42 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:h="http://java.sun.com/jsf/html">
 
-    <p:panel closable="true" toggleable="true" header="#{item.name} #{item.enabled ? '' : '(Disabled)'}"
-             id="panel">
-        <p:ajax event="close" listener="#{pageBean.handleClose(item.name)}"/>
-        <f:facet name="options">
-            <p:menu>
-                <p:submenu label="Settings">
-                    <p:menuitem value="Edit" update="@form"/>
-                    <p:menuitem value="Enable" disabled="#{item.enabled}"
-                                action="#{pageBean.handleEnable(item.name)}" update="@form"/>
-                    <p:menuitem value="Disable" disabled="#{not item.enabled}"
-                                action="#{pageBean.handleDisable(item.name)}" update="@form"/>
-                    <p:menuitem value="Move Up" action="#{pageBean.handleMoveUp(item.name)}" update="@form"/>
-                    <p:menuitem value="Move Down" action="#{pageBean.handleMoveDown(item.name)}" update="@form"/>
-                </p:submenu>
-            </p:menu>
-        </f:facet>
+    <h:panelGroup layout="block" id="panel" styleClass="itemContainer">
 
-        <div class="infoContainer info"><h:outputText escape="false" value="#{item.notes}"/></div>
-        <table cellpadding="4" cellspacing="0" class="scenarioTable">
-            <ui:repeat value="#{item.steps}" var="step">
-                <tr>
-                    <td>#{step.type.name()}</td>
-                    <td>#{step.text}</td>
-                </tr>
-            </ui:repeat>
-        </table>
-        <h:panelGroup layout="block" rendered="#{not empty item.testRows}">
-            <table cellpadding="4" cellspacing="0" class="scenarioTable" style="margin-top: 0.5em">
-                <tr>
-                    <ui:repeat value="#{item.testRows.get(0).keySet().toArray()}" var="key">
-                        <th>#{key}</th>
-                    </ui:repeat>
-                </tr>
-                <ui:repeat value="#{item.testRows}" var="row">
+        <ui:include src="header.xhtml"/>
+
+        <h:panelGroup layout="block" id="scenario-detail" rendered="#{item.enabled}">
+            <div class="infoContainer info"><h:outputText escape="false" value="#{item.notes}"/></div>
+            <table cellpadding="4" cellspacing="0" class="scenarioTable">
+                <ui:repeat value="#{item.steps}" var="step">
                     <tr>
-                        <ui:repeat value="#{row.keySet().toArray()}" var="key">
-                            <td>#{row.get(key)}</td>
-                        </ui:repeat>
+                        <td>#{step.type.name()}</td>
+                        <td>#{step.text}</td>
                     </tr>
                 </ui:repeat>
             </table>
+            <h:panelGroup layout="block" rendered="#{not empty item.testRows}">
+                <table cellpadding="4" cellspacing="0" class="scenarioTable" style="margin-top: 0.5em">
+                    <tr>
+                        <ui:repeat value="#{item.testRows.get(0).keySet().toArray()}" var="key">
+                            <th>#{key}</th>
+                        </ui:repeat>
+                    </tr>
+                    <ui:repeat value="#{item.testRows}" var="row">
+                        <tr>
+                            <ui:repeat value="#{row.keySet().toArray()}" var="key">
+                                <td>#{row.get(key)}</td>
+                            </ui:repeat>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </h:panelGroup>
+            <hr/>
+
         </h:panelGroup>
-    </p:panel>
+
+    </h:panelGroup>
 
 </ui:composition>

@@ -9,45 +9,64 @@
 <f:view id="main-view">
     <h:head>
         <title>Salvador <ui:insert name="title"/></title>
-
-        <h:outputStylesheet library="css" name="basic.css"/>
         <h:outputScript library="javax.faces" name="jsf.js"/>
 
         <ui:insert name="extra-head-content"/>
+
     </h:head>
     <h:body lang="#{request.locale.language}">
+
+        <f:facet name="last">
+            <h:outputStylesheet library="css" name="basic.css"/>
+        </f:facet>
+
         <h1 class="screenReaderOnly"><ui:insert name="title"/></h1>
-        <h:panelGroup id="mainContainer" layout="block">
 
-            <h:form id="menu-form">
-                <input type="hidden" name="page" value="#{pageContent.currentPage.path}#{pageContent.currentPage.name}" />
-                <p:menubar rendered="#{not testRunnerBean.running}">
-                    <p:menuitem value="Home" url="/" />
-                    <p:submenu label="Run">
-                        <p:menuitem value="Suite" action="#{testRunnerBean.runTests}"/>
-                        <p:menuitem value="Test" url="/"/>
-                    </p:submenu>
-                    <p:submenu label="Add">
-                        <p:menuitem value="Page" url="/pages/add-page.xhtml"/>
-                        <p:menuitem value="Scenario" url="/pages/add-scenario.xhtml" />
-                        <p:menuitem value="Note" url="/pages/add-note.xhtml" />
-                        <p:menuitem value="Method" url="/pages/add-method.xhtml"/>
-                    </p:submenu>
-                    <p:submenu label="Page">
-                        <p:menuitem value="Edit" url="/pages/edit-page.xhtml" />
-                        <p:menuitem value="Options" url="/pages/page-options.xhtml"/>
-                        <p:menuitem value="Delete" url="/" />
-                    </p:submenu>
-                    <p:submenu label="Administation">
-                        <p:menuitem value="General" url="/pages/admin.xhtml"/>
-                    </p:submenu>
-                </p:menubar>
-            </h:form>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" styleClass="layoutContainer"
+                          style="background-color:transparent;border:none;"
+                          size="40">
+                <h1><span class="ui-icon ui-icon-pencil" />&nbsp;Salvador</h1>
+            </p:layoutUnit>
 
-            <div>
+            <p:layoutUnit position="south" styleClass="layoutContainer">
+                <div class="info" style="text-align: center">
+                    Contribute @ <a href="https://github.com/mearlam/salvador">GitHub</a>
+                </div>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="west" size="200" collapsible="true" header="Menu"
+                          styleClass="layoutContainer">
+                <h:form id="menu-form">
+                    <input type="hidden" name="page" value="#{pageContent.currentPage.path}#{pageContent.currentPage.name}" />
+                    <p:menu rendered="#{not testRunnerBean.running}" style="width: 184px;">
+                        <p:menuitem value="Home" url="/" />
+                        <p:submenu label="Run">
+                            <p:menuitem value="Suite" action="#{testRunnerBean.runTests}"/>
+                            <p:menuitem value="Test" url="/"/>
+                        </p:submenu>
+                        <p:submenu label="Add">
+                            <p:menuitem value="Page" url="/pages/add-page.xhtml"/>
+                            <p:menuitem value="Scenario" url="/pages/add-scenario.xhtml" />
+                            <p:menuitem value="Note" url="/pages/add-note.xhtml" />
+                            <p:menuitem value="Method" url="/pages/add-method.xhtml"/>
+                        </p:submenu>
+                        <p:submenu label="Page">
+                            <p:menuitem value="Edit" url="/pages/edit-page.xhtml" />
+                            <p:menuitem value="Options" url="/pages/page-options.xhtml"/>
+                            <p:menuitem value="Delete" url="/" />
+                        </p:submenu>
+                        <p:submenu label="Administation">
+                            <p:menuitem value="General" url="/pages/admin.xhtml"/>
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
                 <ui:insert name="main"/>
-            </div>
-        </h:panelGroup>
+            </p:layoutUnit>
+        </p:layout>
     </h:body>
 </f:view>
 </html>
