@@ -10,9 +10,7 @@
             <tr>
                 <td><h:outputText value="#{item.text}" escape="false"/></td>
                 <td style="text-align: right">
-                    <h:panelGroup rendered="#{pageBean.editMode}">
-                        <ui:include src="actions.xhtml"/>
-                    </h:panelGroup>
+                    <ui:include src="actions.xhtml"/>
                 </td>
             </tr>
 

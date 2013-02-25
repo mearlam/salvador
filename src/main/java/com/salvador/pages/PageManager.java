@@ -63,6 +63,7 @@ public class PageManager {
         if (contentFile.exists()) {
             final FileInputStream inputStream = new FileInputStream(contentFile.getAbsolutePath());
             page = (Page) xStream.fromXML(inputStream);
+            page.setName(getPageNameFromPath(directory.getAbsolutePath()));
             inputStream.close();
         } else {
             page.setRootPage(true);
@@ -72,6 +73,14 @@ public class PageManager {
         setChildren(page);
 
         return page;
+    }
+
+    protected String getPageNameFromPath(final String pagePath) {
+        if(StringUtils.isNotEmpty(pagePath) && pagePath.contains(File.separator)) {
+            return pagePath.substring(pagePath.lastIndexOf(File.separator) + 1);
+        }else {
+            return pagePath;
+        }
     }
 
     protected List<Page> getPages(Page rootPage) throws IOException {
@@ -93,6 +102,7 @@ public class PageManager {
                     Page page = (Page) xStream.fromXML(inputStream);
                     page.setFullPath(file.getAbsolutePath());
                     pages.add(page);
+                    page.setName(getPageNameFromPath(file.getAbsolutePath()));
                     inputStream.close();
                 }
             }
@@ -136,7 +146,7 @@ public class PageManager {
     }
 
     public String getParentPath(String referer, String separator) {
-        String path = "";
+        String path;
 
         if (referer.contains(PageManager.TEST_FOLDER)) {
             final String[] parts = referer.split(PageManager.TEST_FOLDER + "/");

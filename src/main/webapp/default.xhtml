@@ -2,36 +2,54 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
                 template="/WEB-INF/templates/default-layout.xhtml">
 
     <ui:define name="main">
+
+        <script type="text/javascript">
+
+            function toggleActions(id) {
+                if(document.getElementById(id).style.display == 'none') {
+                    document.getElementById(id).style.display = "inline-block";
+                } else {
+                    document.getElementById(id).style.display = "none";
+                }
+            }
+
+
+            function showActions(id) {
+                document.getElementById(id).style.display = "inline-block";
+            }
+            function hideActions(id) {
+                document.getElementById(id).style.display = "none";
+            }
+
+        </script>
+
         <h:form>
 
             <p:breadCrumb model="#{pageBean.menuModel}" style="margin-top:0.5em;" styleClass="breadcrumb"
                           rendered="#{pageBean.menuModel.contents.size() gt 1}"/>
-            <ul>
-                <ui:repeat value="#{pageBean.page.children}" var="page">
-                    <li><h:outputLink styleClass="pageLink"
-                                      value="#{request.contextPath}/test/#{page.path}#{page.name}">#{page.name}</h:outputLink>
-                    </li>
+
+            <div style="padding: 5px;">
+                <span class="info" style="font-style: italic;">Pages:</span>
+                <ul style="list-style-type: none;">
+                    <ui:repeat value="#{pageBean.page.children}" var="page">
+                        <li><span class="ui-icon ui-icon-document"/><h:outputLink styleClass="pageLink"
+                                                                                  value="#{request.contextPath}/test/#{page.path}#{page.name}">#{page.name}</h:outputLink>
+                        </li>
+                    </ui:repeat>
+                </ul>
+
+                <ui:repeat value="#{pageBean.page.items}" var="item" varStatus="status">
+                    <h:panelGroup layout="block" rendered="#{item.getClass().getSimpleName() eq 'Scenario'}">
+                        <ui:include src="WEB-INF/templates/page-items/scenario.xhtml"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{item.getClass().getSimpleName() eq 'PageNote'}">
+                        <ui:include src="WEB-INF/templates/page-items/note.xhtml"/>
+                    </h:panelGroup>
                 </ui:repeat>
-            </ul>
 
-            <ui:repeat value="#{pageBean.page.items}" var="item">
-                <h:panelGroup layout="block" rendered="#{item.getClass().getSimpleName() eq 'Scenario'}">
-                    <ui:include src="WEB-INF/templates/page-items/scenario.xhtml"/>
-                </h:panelGroup>
-                <h:panelGroup layout="block" rendered="#{item.getClass().getSimpleName() eq 'PageNote'}">
-                    <ui:include src="WEB-INF/templates/page-items/note.xhtml"/>
-                </h:panelGroup>
-            </ui:repeat>
-
-            <div style="text-align: right;margin-bottom: 10px;">
-                <p:commandButton action="#{pageBean.setEditMode(true)}" value="Show Controls" update="@form"
-                                 rendered="#{!pageBean.editMode}"/>
-                <p:commandButton action="#{pageBean.setEditMode(false)}" value="Hide controls" update="@form"
-                                 rendered="#{pageBean.editMode}"/>
             </div>
 
 

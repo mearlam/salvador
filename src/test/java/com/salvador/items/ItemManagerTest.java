@@ -27,25 +27,25 @@ public class ItemManagerTest {
     public void testMoveItemUp() {
         Page page = new Page();
         PageNote note1 = new PageNote();
-        note1.setName("note1");
+        note1.setId("note1");
         page.getItems().add(note1);
         PageNote note2 = new PageNote();
-        note2.setName("note2");
+        note2.setId("note2");
         page.getItems().add(note2);
         itemManager.moveItemUp(page,"note2");
-        assertThat(page.getItems().get(0).getName(),is("note2"));
+        assertThat(page.getItems().get(0).getId(),is("note2"));
     }
 
     @Test
     public void testMoveItemDown() {
         Page page = new Page();
         PageNote note1 = new PageNote();
-        note1.setName("note1");
+        note1.setId("note1");
         page.getItems().add(note1);
         PageNote note2 = new PageNote();
-        note2.setName("note2");
+        note2.setId("note2");
         page.getItems().add(note2);
         itemManager.moveItemDown(page,"note1");
-        assertThat(page.getItems().get(0).getName(),is("note2"));
+        assertThat(page.getItems().get(0).getId(),is("note2"));
     }
 }

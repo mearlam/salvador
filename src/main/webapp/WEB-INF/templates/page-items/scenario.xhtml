@@ -14,6 +14,17 @@
                     <tr>
                         <td>#{step.type.name()}</td>
                         <td>#{step.text}</td>
+                        <td>
+                            <p:commandButton icon="ui-icon-star"
+                                             update="@form"
+                                             rendered="#{!step.common}"
+                                             title="Make this step common so other scenarios can use it"
+                                             action="#{pageBean.handleFavouriteScenarioStep(step.id)}"
+                                             />
+                            <h:panelGroup styleClass="ui-icon ui-icon-star" rendered="#{step.common}"
+                                    id="step-common-star"/>
+                            <p:tooltip for="step-common-star" value="This domain step is common" />
+                        </td>
                     </tr>
                 </ui:repeat>
             </table>

@@ -135,7 +135,7 @@ public class PageBeanTest {
     public void testHandleClose() throws IOException {
         Page page = new Page();
         PageNote note = new PageNote();
-        note.setName("note1");
+        note.setId("note1");
         page.getItems().add(note);
         pageBean.setPage(page);
         pageBean.handleClose("note1");
@@ -147,7 +147,7 @@ public class PageBeanTest {
     public void testHandleEnable() throws IOException {
         Page page = new Page();
         PageNote note = new PageNote();
-        note.setName("note1");
+        note.setId("note1");
         note.setEnabled(false);
         page.getItems().add(note);
         pageBean.setPage(page);
@@ -160,7 +160,7 @@ public class PageBeanTest {
     public void testHandleDisable() throws IOException {
         Page page = new Page();
         PageNote note = new PageNote();
-        note.setName("note1");
+        note.setId("note1");
         note.setEnabled(true);
         page.getItems().add(note);
         pageBean.setPage(page);

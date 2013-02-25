@@ -2,36 +2,42 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
 
-    <div>
-        <span class="actionContainer" id="actions-container">
+    <span class="ui-icon ui-icon-pencil" onmouseover="showActions('actions-container#{status.index}');"
+          onclick="toggleActions('actions-container#{status.index}');"/>
+        <span class="actionContainer" id="actions-container#{status.index}">
+            <p:commandButton icon="ui-icon-wrench"
+                             action="#{scenarioBean.handleEditScenario(item.id)}"
+                             update="@form"
+                             ajax="false"
+                             title="Edit"
+                             styleClass="small-button"/>
             <p:commandButton icon="ui-icon-arrowthick-1-n"
-                             action="#{pageBean.handleMoveUp(item.name)}"
+                             action="#{pageBean.handleMoveUp(item.id)}"
                              update="@form"
                              title="Move this item up"
                              styleClass="small-button"/>
             <p:commandButton icon="ui-icon-arrowthick-1-s"
-                             action="#{pageBean.handleMoveDown(item.name)}"
+                             action="#{pageBean.handleMoveDown(item.id)}"
                              update="@form"
                              title="Move this item down"
                              styleClass="small-button"/>
             <p:commandButton icon="ui-icon-check"
-                             action="#{pageBean.handleEnable(item.name)}"
+                             action="#{pageBean.handleEnable(item.id)}"
                              update="@form"
                              disabled="#{!item.canBeDisabled}"
-                             title="Enable this item"
+                             title="Enable"
                              styleClass="small-button"/>
             <p:commandButton icon="ui-icon-pause"
-                             action="#{pageBean.handleDisable(item.name)}"
+                             action="#{pageBean.handleDisable(item.id)}"
                              update="@form"
                              disabled="#{!item.canBeDisabled}"
-                             title="Disable this item"
+                             title="Disable"
                              styleClass="small-button"/>
-            <p:commandButton icon="ui-icon-closethick"
-                             action="#{pageBean.handleClose(item.name)}"
+            <p:commandButton icon="ui-icon-trash"
+                             action="#{pageBean.handleClose(item.id)}"
                              update="@form"
-                             title="Delete his item from the page"
+                             title="Delete"
                              styleClass="small-button"/>
         </span>
-    </div>
 
 </ui:composition>

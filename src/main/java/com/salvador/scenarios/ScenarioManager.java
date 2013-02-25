@@ -10,4 +10,17 @@ import com.salvador.pages.Page;
  */
 public class ScenarioManager {
 
+    public ScenarioStep getScenarioStep(Page page, String id) {
+
+        for(Scenario scenario : page.getItems(Scenario.class)) {
+            for(ScenarioStep step : scenario.getSteps()) {
+                if(step.getId().equals(id)) {
+                    return step;
+                }
+            }
+        }
+
+        return null;
+    }
+
 }

@@ -12,12 +12,12 @@ import com.salvador.scenarios.Scenario;
  */
 public class ItemManager {
 
-    public void moveItemUp(Page page, String name) {
+    public void moveItemUp(Page page, String id) {
         int index = 0;
         PageItem item = null;
 
         for(PageItem tempItem: page.getItems()) {
-            if(tempItem.getName().equals(name)) {
+            if(tempItem.getId().equals(id)) {
                 item = tempItem;
                 break;
             }
@@ -30,12 +30,12 @@ public class ItemManager {
         }
     }
 
-    public void moveItemDown(Page page, String name) {
+    public void moveItemDown(Page page, String id) {
         int index = 0;
         PageItem item = null;
 
         for(PageItem tempItem: page.getItems()) {
-            if(tempItem.getName().equals(name)) {
+            if(tempItem.getId().equals(id)) {
                 item = tempItem;
                 break;
             }

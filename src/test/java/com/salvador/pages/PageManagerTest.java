@@ -97,4 +97,11 @@ public class PageManagerTest {
 
         pageManager.delete(updatedPage);
     }
+
+    @Test
+    public void testGetPageNameFromPath() {
+        assertThat(pageManager.getPageNameFromPath("test\\Page1"), is("Page1"));
+        assertThat(pageManager.getPageNameFromPath(""), is(""));
+        assertThat(pageManager.getPageNameFromPath("page1"), is("page1"));
+    }
 }

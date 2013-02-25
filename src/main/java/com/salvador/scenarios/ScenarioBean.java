@@ -1,7 +1,9 @@
 package com.salvador.scenarios;
 
 import com.salvador.configuration.Configuration;
+import com.salvador.pages.Page;
 import com.salvador.pages.PageContent;
+import com.salvador.pages.PageItem;
 import com.salvador.pages.PageManager;
 import com.salvador.utils.FacesUtils;
 
@@ -40,10 +42,14 @@ public class ScenarioBean implements Serializable {
     @Inject
     transient PageManager pageManager;
 
+    @Inject
+    transient ScenarioManager scenarioManager;
+
     private String name;
     private String notes;
     private Scenario scenario;
     private List<String> parameters;
+    private List<ScenarioStep> commonSteps;
 
     @Inject
     PageContent pageContent;
@@ -54,6 +60,44 @@ public class ScenarioBean implements Serializable {
     @PostConstruct
     public void init() {
         conversation.begin();
+        scenario = new Scenario();
+        parameters = new ArrayList<String>();
+    }
+
+    public String handleEditScenario(final String itemId) throws IOException {
+        final PageItem item = pageContent.getCurrentPage().getItem(itemId);
+        if(item != null) {
+            scenario = (Scenario) item;
+            name = scenario.getName();
+            notes = scenario.getNotes();
+        }
+
+        return "/pages/add-scenario";
+    }
+
+    public List<ScenarioStep> getCommonSteps() throws IOException {
+        if (commonSteps == null) {
+            commonSteps = new ArrayList<ScenarioStep>();
+            final Page rootPage = pageManager.getPage(configuration.getHome(), "");
+            addCommonSteps(rootPage);
+
+        }
+
+        return commonSteps;
+    }
+
+    private void addCommonSteps(Page page) {
+        for(Scenario tempScenario : page.getItems(Scenario.class)) {
+            for(ScenarioStep step : tempScenario.getSteps()) {
+                if(step.isCommon()) {
+                    commonSteps.add(step);
+                }
+            }
+        }
+
+        for(Page child : page.getChildren()) {
+            addCommonSteps(child);
+        }
     }
 
     public void createScenario() throws IOException {
@@ -83,13 +127,6 @@ public class ScenarioBean implements Serializable {
     }
 
     public String addScenarioStep() throws IOException {
-
-        if (scenario == null) {
-            scenario = new Scenario();
-            parameters = new ArrayList<String>();
-        }
-        scenario.setName(name);
-        scenario.setNotes(notes);
 
         ScenarioStep step = new ScenarioStep();
         step.setType(scenarioContentBean.getStepType());

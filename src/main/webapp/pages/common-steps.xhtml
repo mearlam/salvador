@@ -1,0 +1,33 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+        template="/WEB-INF/templates/default-layout.xhtml">
+
+    <ui:define name="main">
+        <h:form id="form">
+
+            <h1>Common steps</h1>
+
+            <h:panelGroup layout="block" style="width: 50%;">
+                <table cellpadding="4" cellspacing="0" class="scenarioTable">
+                    <ui:repeat value="#{scenarioBean.commonSteps}" var="step">
+                        <tr>
+                            <td>
+                                <p:commandButton
+                                        update="@form"
+                                        title="Remove from the common step list"
+                                        icon="ui-icon-closethick"
+                                        action="#{pageBean.handleFavouriteScenarioStep(step.text)}"/>
+                            </td>
+                            <td>#{step.text}</td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

@@ -1,9 +1,11 @@
 package com.salvador.pages;
 
 import com.salvador.common.annotations.AutoTest;
+import com.salvador.common.annotations.SkipAutoTest;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.UUID;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,13 +16,24 @@ import java.lang.String;
 @AutoTest
 public class PageItem implements Serializable {
 
+    private String id;
     private String name;
     private boolean enabled;
     private boolean canBeDisabled;
 
     public PageItem() {
+        id = UUID.randomUUID().toString();
         enabled = true;
         canBeDisabled = true;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    @SkipAutoTest
+    public String getId() {
+        return id;
     }
 
     public String getName() {

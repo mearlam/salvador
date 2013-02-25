@@ -12,15 +12,14 @@
             <h1>Adding to page 'test/#{pageContent.currentPage.path}#{pageContent.currentPage.name}'</h1>
 
             <h:panelGroup layout="block" style="width: 50%;">
-                <p:messages showDetail="true" />
+                <p:messages showDetail="true"/>
                 <p:panel header="Details" styleClass="scenarioContainer">
                     <h:panelGrid columns="2" styleClass="formTable">
                         <h:outputText value="Name:"/>
-                        <p:inputText id="scenario-name" value="#{scenarioBean.name}" required="true" size="50"/>
+                        <p:inputText id="scenario-name" value="#{scenarioBean.scenario.name}" required="true"
+                                     size="50"/>
                         <h:outputText value="Notes:"/>
-                        <p:inputTextarea cols="80" value="#{scenarioBean.notes}" />
-                        <h:outputText value="&#160;" escape="false"/>
-                        <h:outputText value="tip: you can add any html tags into the notes" styleClass="info"/>
+                        <p:editor value="#{scenarioBean.scenario.notes}"/>
                     </h:panelGrid>
                 </p:panel>
                 <p:panel header="Steps" styleClass="scenarioContainer">
@@ -33,7 +32,15 @@
                             <f:selectItem itemValue="And" itemLabel="And"/>
                         </p:selectOneMenu>
                         <h:outputText value="Domain Step:"/>
-                        <p:inputText id="ste-text" size="60" value="#{scenarioContentBean.stepText}" />
+                        <p:inputText id="ste-text" size="60" value="#{scenarioContentBean.stepText}"/>
+                        <h:outputText value="or:" escape="false"/>
+                        <p:selectOneMenu>
+                            <f:selectItem itemValue="" itemLabel="Common steps...."/>
+                            <f:selectItems value="#{scenarioBean.commonSteps}"
+                                           var="step"
+                                           itemValue="#{step.text}"
+                                           itemLabel="#{step.text}"/>
+                        </p:selectOneMenu>
                         <h:outputText value="&#160;" escape="false"/>
                         <p:commandButton value="Add" action="#{scenarioBean.addScenarioStep}" update="@form"/>
                     </h:panelGrid>
@@ -52,33 +59,52 @@
                         </tr>
                     </table>
                 </p:panel>
-                <h2>Steps</h2>
-                <table cellpadding="2" cellspacing="0" class="scenarioTable">
-                    <ui:repeat value="#{scenarioBean.scenario.steps}" var="step">
-                        <tr>
-                            <td>#{step.type.name()}</td>
-                            <td>#{step.text}</td>
-                        </tr>
-                    </ui:repeat>
-                </table>
 
-                <h2>Data</h2>
-                <table cellpadding="2" cellspacing="0" width="100%" class="scenarioTable">
-                    <tr>
-                        <ui:repeat value="#{scenarioBean.parameters}" var="parameter">
-                            <th>#{parameter}</th>
+                <p:panel header="Preview" styleClass="scenarioContainer">
+                    <h2>Steps</h2>
+                    <table cellpadding="2" cellspacing="0" class="scenarioTable">
+                        <ui:repeat value="#{scenarioBean.scenario.steps}" var="step">
+                            <tr>
+                                <td>
+                                    <p:commandButton icon="ui-icon-trash"
+                                                     action="#{pageBean.handleClose(item.name)}"
+                                                     update="@form"
+                                                     title="Delete"
+                                                     styleClass="small-button"/>
+                                </td>
+                                <td>#{step.type.name()}</td>
+                                <td>#{step.text}</td>
+                            </tr>
                         </ui:repeat>
-                    </tr>
-                    <ui:repeat value="#{scenarioBean.scenario.testRows}" var="row">
+                    </table>
+
+                    <h2>Data</h2>
+                    <table cellpadding="2" cellspacing="0" width="100%" class="scenarioTable">
                         <tr>
-                            <ui:repeat value="#{row.keySet().toArray()}" var="key">
-                                <td>#{row.get(key)}</td>
+                            <th width="20px;">&#160;</th>
+                            <ui:repeat value="#{scenarioBean.parameters}" var="parameter">
+                                <th>#{parameter}</th>
                             </ui:repeat>
                         </tr>
-                    </ui:repeat>
-                </table>
+                        <ui:repeat value="#{scenarioBean.scenario.testRows}" var="row">
+                            <tr>
+                                <td>
+                                    <p:commandButton icon="ui-icon-trash"
+                                                     action="#{pageBean.handleClose(item.name)}"
+                                                     update="@form"
+                                                     title="Delete"
+                                                     styleClass="small-button"/>
+                                </td>
+                                <ui:repeat value="#{row.keySet().toArray()}" var="key">
+                                    <td>#{row.get(key)}</td>
+                                </ui:repeat>
+                            </tr>
+                        </ui:repeat>
+                    </table>
+                </p:panel>
 
                 <div style="text-align: right;">
+                    <p:commandButton value="Cancel" immediate="true" action="#{pageBean.cancel}"/>
                     <p:commandButton value="Create Scenario" action="#{scenarioBean.createScenario}" ajax="false"/>
                 </div>
             </h:panelGroup>

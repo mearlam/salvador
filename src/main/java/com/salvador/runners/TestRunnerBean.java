@@ -43,9 +43,9 @@ public class TestRunnerBean implements Serializable {
 
     transient private LogReader logReader;
     private boolean running;
-    TestRunner testRunner;
+    transient TestRunner testRunner;
 
-    private ProcessListener processListener;
+    private transient ProcessListener processListener;
     private List<ScenarioStep> stepsRun;
 
     public String runTests() throws TestRunnerException {

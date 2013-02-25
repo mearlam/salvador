@@ -4,6 +4,7 @@ import com.salvador.configuration.Configuration;
 import com.salvador.items.ItemManager;
 import com.salvador.scenarios.Scenario;
 import com.salvador.scenarios.ScenarioManager;
+import com.salvador.scenarios.ScenarioStep;
 import com.salvador.spi.ViewScoped;
 import com.salvador.utils.FacesUtils;
 import org.apache.commons.lang.StringUtils;
@@ -36,13 +37,15 @@ public class PageBean implements Serializable {
     // used for bulk add
     private String names;
     private Page page;
-    private boolean editMode;
 
     @Inject
     transient PageContent pageContent;
 
     @Inject
     transient PageManager pageManager;
+
+    @Inject
+    transient ScenarioManager scenarioManager;
 
     @Inject
     transient Configuration configuration;
@@ -52,7 +55,6 @@ public class PageBean implements Serializable {
 
     @PostConstruct
     public void initPage() throws IOException {
-        editMode = false;
         if (page == null) {
             page = pageManager.getPage(configuration.getHome(), FacesUtils.getDestinationPage());
             pageContent.setCurrentPage(page);
@@ -99,14 +101,6 @@ public class PageBean implements Serializable {
         return page;
     }
 
-    public boolean isEditMode() {
-        return editMode;
-    }
-
-    public void setEditMode(boolean editMode) {
-        this.editMode = editMode;
-    }
-
     public void createPage() throws IOException {
 
         final String referer = FacesUtils.getParam("referer");
@@ -144,29 +138,41 @@ public class PageBean implements Serializable {
         return isDuplicate;
     }
 
-    public void handleClose(final String itemName) throws IOException {
-        page.getItems().remove(page.getItem(itemName));
+    public void handleClose(final String itemId) throws IOException {
+        page.getItems().remove(page.getItem(itemId));
         pageManager.save(configuration.getHome(), page);
     }
 
-    public void handleEnable(final String itemName) throws IOException {
-        page.getItem(itemName).setEnabled(true);
+    public void handleEnable(final String itemId) throws IOException {
+        page.getItem(itemId).setEnabled(true);
         pageManager.save(configuration.getHome(), page);
     }
 
-    public void handleDisable(final String itemName) throws IOException {
-        page.getItem(itemName).setEnabled(false);
+    public void handleDisable(final String itemId) throws IOException {
+        page.getItem(itemId).setEnabled(false);
         pageManager.save(configuration.getHome(), page);
     }
 
-    public void handleMoveUp(final String itemName) throws IOException {
-        itemManager.moveItemUp(page, itemName);
+    public void handleMoveUp(final String itemId) throws IOException {
+        itemManager.moveItemUp(page, itemId);
         pageManager.save(configuration.getHome(), page);
     }
 
-    public void handleMoveDown(final String itemName) throws IOException {
-        itemManager.moveItemDown(page, itemName);
+    public void handleMoveDown(final String itemId) throws IOException {
+        itemManager.moveItemDown(page, itemId);
         pageManager.save(configuration.getHome(), page);
+    }
+
+    public void handleFavouriteScenarioStep(final String stepId) throws IOException {
+        ScenarioStep step = scenarioManager.getScenarioStep(page, stepId);
+        if(step != null) {
+            step.setCommon(true);
+            pageManager.save(configuration.getHome(),page);
+        }
+    }
+
+    public void cancel() {
+        FacesUtils.redirect(pageContent.getCurrentPage());
     }
 
     public String getNames() {

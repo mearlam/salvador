@@ -7,11 +7,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @AutoTest
 public class Page implements Serializable {
 
-    private String name;
+    // name is based on the folder name so do not save it
+    private String id;
+    private transient String name;
     private String path;
     private String fullPath;
     private Date created;
@@ -21,12 +24,21 @@ public class Page implements Serializable {
     private transient List<Page> children;
 
     public Page() {
+        id = UUID.randomUUID().toString();
         created = new Date();
         name = "";
         path = "";
         items = new ArrayList<PageItem>();
         children = new ArrayList<Page>();
         enabled = true;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public List<PageItem> getItems() {
@@ -101,9 +113,9 @@ public class Page implements Serializable {
         return tempItems;
     }
 
-    public PageItem getItem(String name) {
+    public PageItem getItem(String id) {
         for(PageItem item : items) {
-            if(item.getName() != null && item.getName().equals(name)) {
+            if(item.getId() != null && item.getId().equals(id)) {
                 return item;
             }
         }

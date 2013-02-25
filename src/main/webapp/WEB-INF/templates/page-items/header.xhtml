@@ -5,11 +5,11 @@
 
     <table width="100%">
         <tr>
-            <td><h1><h:outputText value="#{item.name} #{item.enabled ? '' : '(Disabled)'}"/></h1></td>
+            <td><h1><span class="ui-icon ui-icon-note"/>
+                <h:outputText value="#{item.name} #{item.enabled ? '' : '(Disabled)'}"/>
+                <ui:include src="actions.xhtml"/></h1></td>
             <td style="text-align: right">
-                <h:panelGroup rendered="#{pageBean.editMode}">
-                    <ui:include src="actions.xhtml"/>
-                </h:panelGroup>
+
             </td>
         </tr>
 
