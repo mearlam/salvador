@@ -23,6 +23,8 @@ public class ScenarioStep implements Serializable {
     private String text;
     private boolean common;
     private ScenarioStepRunInformation runInformation;
+    private transient boolean complete;
+    private transient boolean passed;
 
     public ScenarioStep() {
         id = UUID.randomUUID().toString();
@@ -64,5 +66,21 @@ public class ScenarioStep implements Serializable {
 
     public void setCommon(boolean common) {
         this.common = common;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
+    }
+
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setPassed(boolean passed) {
+        this.passed = passed;
+    }
+
+    public boolean isPassed() {
+        return passed;
     }
 }

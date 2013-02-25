@@ -46,6 +46,7 @@ public class JavaTestRunner implements TestRunner {
             command += getLibsFromHome(parameters);
             command += " " + parameters.getExecutorClass();
             command += " " + parameters.getHome();
+            command += " " + parameters.getTestId();
             if (parameters.getPage() != null) {
                 command += " " + parameters.getPage();
             }
@@ -103,6 +104,7 @@ public class JavaTestRunner implements TestRunner {
         parameters.setJavaHome(System.getenv().get("JAVA_HOME"));
         parameters.setHome("C:\\mine\\salvador\\home");
         parameters.setPage("Page1");
+        parameters.setTestId("1234");
         parameters.setExecutorClass("com.salvador.executors.DefaultExecutor");
 
         LogReader logReader = new SystemOutLogger();

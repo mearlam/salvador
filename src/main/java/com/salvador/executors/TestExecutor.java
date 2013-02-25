@@ -8,5 +8,12 @@ package com.salvador.executors;
  */
 public interface TestExecutor {
 
-    void execute(String home, String page);
+    /**
+     * Runs the java main class that kicks off the tests
+     *
+     * @param home   Where the pages are stored
+     * @param testId The id of the tests to update status on
+     * @param page   The root page we are running
+     */
+    void execute(String home, String testId, String page);
 }

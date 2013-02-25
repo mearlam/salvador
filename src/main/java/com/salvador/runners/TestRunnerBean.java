@@ -5,6 +5,7 @@ import com.salvador.loggers.HtmlStringLogger;
 import com.salvador.loggers.LogReader;
 import com.salvador.loggers.SystemOutLogger;
 import com.salvador.pages.Page;
+import com.salvador.pages.PageContent;
 import com.salvador.pages.PageManager;
 import com.salvador.scenarios.ScenarioStep;
 import org.slf4j.Logger;
@@ -39,9 +40,16 @@ public class TestRunnerBean implements Serializable {
     transient PageManager pageManager;
 
     @Inject
+    PageContent pageContent;
+
+    @Inject
     transient Configuration configuration;
 
+    @Inject
+    transient TestManager testManager;
+
     transient private LogReader logReader;
+    private TestSuite testSuite;
     private boolean running;
     transient TestRunner testRunner;
 
@@ -62,13 +70,14 @@ public class TestRunnerBean implements Serializable {
                 }
             };
 
-            final Page page = pageManager.getPageFromPageRequestParameter();
+            testSuite = testManager.newSuite(pageContent.getCurrentPage());
 
             final TestRunnerParameters parameters = new TestRunnerParameters();
             parameters.setJavaHome(configuration.getJavaHome());
             parameters.setExecutorClass(configuration.getTestExecutorClass());
             parameters.setHome(configuration.getHome());
-            parameters.setPage(page.getName());
+            parameters.setPage(pageContent.getCurrentPage().getName());
+            parameters.setTestId(testSuite.getId());
             log.info("Running tests with runner '{}'", configuration.getTestRunnerClass());
             log.info("Running tests with executor '{}'", configuration.getTestExecutorClass());
 
@@ -93,6 +102,14 @@ public class TestRunnerBean implements Serializable {
         }
 
         return "/pages/runner.xhtml";
+    }
+
+    public TestSuite getTestSuite() {
+        return testSuite;
+    }
+
+    public void setTestSuite(TestSuite testSuite) {
+        this.testSuite = testSuite;
     }
 
     public String getLog() {

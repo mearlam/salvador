@@ -18,14 +18,15 @@
                     Finished!
                 </h:panelGroup>
 
-                <table cellpadding="4" cellspacing="0" class="scenarioTable">
-                    <ui:repeat value="#{scenario.stepsRun}" var="step">
-                        <tr>
-                            <td>#{step.type.name()}</td>
-                            <td>#{step.text}</td>
-                        </tr>
-                    </ui:repeat>
-                </table>
+                Page: #{testRunnerBean.testSuite.page.name}
+                <ui:repeat value="#{testRunnerBean.testSuite.page.items}" var="item" varStatus="status">
+                    <h:panelGroup layout="block" rendered="#{item.getClass().getSimpleName() eq 'Scenario'}">
+                        <ui:include src="/WEB-INF/templates/running/scenario.xhtml"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{item.getClass().getSimpleName() eq 'PageNote'}">
+                        <ui:include src="/WEB-INF/templates/page-items/note.xhtml"/>
+                    </h:panelGroup>
+                </ui:repeat>
 
                 <h2>Log:</h2>
 

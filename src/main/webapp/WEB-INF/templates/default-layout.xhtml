@@ -39,13 +39,13 @@
                           styleClass="layoutContainer">
                 <h:form id="menu-form">
                     <input type="hidden" name="page" value="#{pageContent.currentPage.path}#{pageContent.currentPage.name}" />
-                    <p:menu rendered="#{not testRunnerBean.running}" style="width: 184px;">
+                    <p:menu style="width: 184px;">
                         <p:menuitem value="Home" url="/" />
-                        <p:submenu label="Run">
+                        <p:submenu label="Run" rendered="#{not testRunnerBean.running}">
                             <p:menuitem value="Suite" action="#{testRunnerBean.runTests}"/>
                             <p:menuitem value="Test" url="/"/>
                         </p:submenu>
-                        <p:submenu label="Add">
+                        <p:submenu label="Add" rendered="#{not testRunnerBean.running}">
                             <p:menuitem value="Page" url="/pages/add-page.xhtml"/>
                             <p:menuitem value="Scenario" url="/pages/add-scenario.xhtml" />
                             <p:menuitem value="Setup" url="/pages/add-setup.xhtml" />
@@ -53,12 +53,12 @@
                             <p:menuitem value="Note" url="/pages/add-note.xhtml" />
                             <p:menuitem value="Method" url="/pages/add-method.xhtml"/>
                         </p:submenu>
-                        <p:submenu label="Page">
+                        <p:submenu label="Page" rendered="#{not testRunnerBean.running}">
                             <p:menuitem value="Edit" url="/pages/edit-page.xhtml" />
                             <p:menuitem value="Options" url="/pages/page-options.xhtml"/>
                             <p:menuitem value="Delete" url="/" />
                         </p:submenu>
-                        <p:submenu label="Administation">
+                        <p:submenu label="Administation" rendered="#{not testRunnerBean.running}">
                             <p:menuitem value="General" url="/pages/admin.xhtml"/>
                             <p:menuitem value="Common Steps" url="/pages/common-steps.xhtml"/>
                         </p:submenu>
