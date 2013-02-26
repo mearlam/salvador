@@ -45,6 +45,7 @@ public class TestRunnerService {
         final TestSuite suite = testManager.getSuites().get(id);
 
         if (suite != null) {
+            suite.getLogReader().addLog("passed-service-update:" + id);
             log.debug("passed {}", scenarioId);
             final PageItem item = suite.getPage().getItem(scenarioId);
             if (item != null) {

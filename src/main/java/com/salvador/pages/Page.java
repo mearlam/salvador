@@ -2,6 +2,7 @@ package com.salvador.pages;
 
 import com.salvador.common.annotations.AutoTest;
 import com.salvador.common.annotations.SkipAutoTest;
+import com.salvador.scenarios.Scenario;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -121,5 +122,22 @@ public class Page implements Serializable {
         }
 
         return null;
+    }
+
+    public int getScenarioCount() {
+        int count = 0;
+        count = getScenarioCount(this,count);
+        return count;
+    }
+
+    private int getScenarioCount(Page page, int counter) {
+
+        counter += page.getItems(Scenario.class).size();
+
+        for (Page childPage : page.getChildren()) {
+            return getScenarioCount(childPage,counter);
+        }
+
+        return counter;
     }
 }

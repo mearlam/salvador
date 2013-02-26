@@ -5,8 +5,6 @@
 
     <h:panelGroup layout="block" id="panel" styleClass="itemContainer">
 
-        <ui:include src="header.xhtml"/>
-
         <h:panelGroup layout="block" id="scenario-detail" rendered="#{item.enabled}">
             <div class="infoContainer info"><h:outputText escape="false" value="#{item.notes}"/></div>
             <table cellpadding="4" cellspacing="0" class="scenarioTable">

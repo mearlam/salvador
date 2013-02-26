@@ -46,6 +46,8 @@ public class ConfigurationBean implements Serializable {
     public void addVariable() throws IOException {
         configuration.getVariables().put(variableName,variableValue);
         update();
+        variableName = "";
+        variableValue = "";
     }
 
     public Configuration getConfiguration() {

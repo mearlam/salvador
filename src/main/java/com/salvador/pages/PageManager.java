@@ -46,9 +46,6 @@ public class PageManager {
     }
 
     public Page getPage(String home, String pagePath) throws IOException {
-
-        log.debug("home:{}", home);
-        log.debug("page:{}", pagePath);
         Page page = new Page();
         String filePagePath = home + File.separator + PAGE_FOLDER + File.separator;
 
@@ -90,7 +87,7 @@ public class PageManager {
     protected List<Page> getPages(String root) throws IOException {
         List<Page> pages = new ArrayList<Page>();
 
-        log.debug("Scanning {} for pages", root);
+        log.debug("Scanning for pages...");
         File scanDirectory = new File(root);
 
         if (scanDirectory.exists()) {

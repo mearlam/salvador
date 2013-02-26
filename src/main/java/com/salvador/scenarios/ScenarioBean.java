@@ -42,6 +42,7 @@ public class ScenarioBean implements Serializable {
     @Inject
     transient PageManager pageManager;
 
+    @SuppressWarnings("CdiUnproxyableBeanTypesInspection")
     @Inject
     transient ScenarioManager scenarioManager;
 
@@ -50,6 +51,7 @@ public class ScenarioBean implements Serializable {
     private Scenario scenario;
     private List<String> parameters;
     private List<ScenarioStep> commonSteps;
+    private boolean updating;
 
     @Inject
     PageContent pageContent;
@@ -66,10 +68,15 @@ public class ScenarioBean implements Serializable {
 
     public String handleEditScenario(final String itemId) throws IOException {
         final PageItem item = pageContent.getCurrentPage().getItem(itemId);
-        if(item != null) {
+        if (item != null) {
             scenario = (Scenario) item;
             name = scenario.getName();
             notes = scenario.getNotes();
+            updating = true;
+
+            for(ScenarioStep step : scenario.getSteps()) {
+                findParameters(step.getText());
+            }
         }
 
         return "/pages/add-scenario";
@@ -87,24 +94,27 @@ public class ScenarioBean implements Serializable {
     }
 
     private void addCommonSteps(Page page) {
-        for(Scenario tempScenario : page.getItems(Scenario.class)) {
-            for(ScenarioStep step : tempScenario.getSteps()) {
-                if(step.isCommon()) {
+        for (Scenario tempScenario : page.getItems(Scenario.class)) {
+            for (ScenarioStep step : tempScenario.getSteps()) {
+                if (step.isCommon()) {
                     commonSteps.add(step);
                 }
             }
         }
 
-        for(Page child : page.getChildren()) {
+        for (Page child : page.getChildren()) {
             addCommonSteps(child);
         }
     }
 
-    public void createScenario() throws IOException {
+    public void save() throws IOException {
 
         if (pageContent.getCurrentPage() != null) {
             if (validates()) {
-                pageContent.getCurrentPage().getItems().add(scenario);
+                if (!updating) {
+                    pageContent.getCurrentPage().getItems().add(scenario);
+                }
+
                 pageManager.save(configuration.getHome(), pageContent.getCurrentPage());
                 conversation.end();
 
@@ -133,7 +143,7 @@ public class ScenarioBean implements Serializable {
         step.setText(scenarioContentBean.getStepText());
         scenario.getSteps().add(step);
 
-        findParameters();
+        findParameters(scenarioContentBean.getStepText());
 
         scenarioContentBean.setCreated(true);
         return "";
@@ -154,9 +164,9 @@ public class ScenarioBean implements Serializable {
         return "";
     }
 
-    private void findParameters() {
+    private void findParameters(final String text) {
 
-        String[] parts = scenarioContentBean.getStepText().split(" ");
+        String[] parts = text.split(" ");
 
         for (String part : parts) {
             if (part.startsWith("@")) {

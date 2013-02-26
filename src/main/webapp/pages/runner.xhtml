@@ -7,7 +7,7 @@
         template="/WEB-INF/templates/default-layout.xhtml">
 
     <ui:define name="main">
-        <h:form id="form">
+        <h:form id="form" onload="pbAjax.start()">
             <p:poll interval="2" update="main" stop="#{not testRunnerBean.running}"/>
 
             <h:panelGroup layout="block" id="main">

@@ -70,7 +70,9 @@ public class TestRunnerBean implements Serializable {
                 }
             };
 
-            testSuite = testManager.newSuite(pageContent.getCurrentPage());
+            logReader = new HtmlStringLogger();
+
+            setupTestSuite();
 
             final TestRunnerParameters parameters = new TestRunnerParameters();
             parameters.setJavaHome(configuration.getJavaHome());
@@ -83,9 +85,6 @@ public class TestRunnerBean implements Serializable {
 
             final Class testRunnerClass = Class.forName(configuration.getTestRunnerClass());
             testRunner = (TestRunner) testRunnerClass.newInstance();
-
-            logReader = new HtmlStringLogger();
-
             Thread thread = new Thread() {
                 public void run() {
                     log.debug("Starting test runner");
@@ -98,10 +97,17 @@ public class TestRunnerBean implements Serializable {
 
 
         } catch (Exception e) {
+            logReader.addLog("Could not start tests:" + e.getMessage());
             log.error("Could not start tests", e);
         }
 
         return "/pages/runner.xhtml";
+    }
+
+    private void setupTestSuite() {
+        testSuite = testManager.newSuite(pageContent.getCurrentPage());
+        testSuite.setTestsToRun(pageContent.getCurrentPage().getScenarioCount());
+        testSuite.setLogReader(logReader);
     }
 
     public TestSuite getTestSuite() {

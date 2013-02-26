@@ -1,5 +1,6 @@
 package com.salvador.runners;
 
+import com.salvador.loggers.LogReader;
 import com.salvador.pages.Page;
 import org.omg.CORBA.PRIVATE_MEMBER;
 
@@ -16,10 +17,30 @@ public class TestSuite implements Serializable {
 
     private String id;
     private boolean running;
+    private int testsToRun;
     private Page page;
+
+    // can be used to print info back to the screen
+    private transient LogReader logReader;
 
     public TestSuite() {
         id = UUID.randomUUID().toString();
+    }
+
+    public LogReader getLogReader() {
+        return logReader;
+    }
+
+    public void setLogReader(LogReader logReader) {
+        this.logReader = logReader;
+    }
+
+    public int getTestsToRun() {
+        return testsToRun;
+    }
+
+    public void setTestsToRun(int testsToRun) {
+        this.testsToRun = testsToRun;
     }
 
     public boolean isRunning() {
