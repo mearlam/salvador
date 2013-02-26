@@ -28,10 +28,9 @@ public class ConfigurationManager {
         xStream = new XStream();
     }
 
-    public void save(Configuration configuration) throws IOException {
+    public void save(String home, Configuration configuration) throws IOException {
         final String xml = xStream.toXML(configuration);
-        final String settingsFolder =
-                        configuration.getHome() + File.separator + CONFIG_FOLDER + File.separator;
+        final String settingsFolder = home + File.separator + CONFIG_FOLDER + File.separator;
         final String settingsPath = settingsFolder + SETTINGS_FILE;
         FileUtils.forceMkdir(new File(settingsFolder));
         log.debug("saving config to {}", settingsPath);
@@ -41,13 +40,12 @@ public class ConfigurationManager {
     public Configuration load(String home) {
 
         Configuration configuration = new Configuration();
-        final String settingsPath = home + File.separator + CONFIG_FOLDER + File.separator + SETTINGS_FILE;
+        final String settingsPath = home + CONFIG_FOLDER + File.separator + SETTINGS_FILE;
         log.debug("loading configuration from {}", settingsPath);
         final File settings = new File(settingsPath);
         FileInputStream inputStream = null;
         try {
-            inputStream = new FileInputStream(settings.getAbsolutePath()
-                    + File.separator + "content.xml");
+            inputStream = new FileInputStream(settings.getAbsolutePath());
             configuration = (Configuration) xStream.fromXML(inputStream);
         } catch (FileNotFoundException e) {
             log.error("could not load settings", e);
