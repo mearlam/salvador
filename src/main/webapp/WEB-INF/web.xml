@@ -8,6 +8,12 @@
 
     <display-name>Salvador</display-name>
 
+    <!-- here your home lives -->
+    <context-param>
+        <param-name>com.salvador.home</param-name>
+        <param-value>C:\mine\salvador\home\</param-value>
+    </context-param>
+
     <!-- Change to "Production" when you are ready to deploy -->
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
