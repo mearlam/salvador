@@ -53,4 +53,14 @@ public class Scenario extends PageItem {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
+    public ScenarioStep getStep(String id) {
+        for(ScenarioStep step : steps) {
+            if(step.getId() != null && step.getId().equals(id)) {
+                return step;
+            }
+        }
+
+        return null;
+    }
 }

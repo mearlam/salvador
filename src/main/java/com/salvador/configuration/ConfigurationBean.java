@@ -3,6 +3,7 @@ package com.salvador.configuration;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,11 +15,13 @@ import javax.inject.Named;
 @RequestScoped
 public class ConfigurationBean {
 
-    @Inject
     Configuration configuration;
 
-    public String update() {
-        // todo Configuration save to disk
+    @Inject
+    ConfigurationManager configurationManager;
+
+    public String update() throws IOException {
+        configurationManager.save(configuration);
         return "";
     }
 

@@ -2,6 +2,7 @@ package com.salvador.configuration;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.io.Serializable;
 
 /**
@@ -18,12 +19,17 @@ public class Configuration implements Serializable {
     private String testRunnerClass;
     private String testExecutorClass;
 
+    @Inject
+    ConfigurationManager configurationManager;
+
     @PostConstruct
     public void init() {
         home = "C:\\mine\\salvador\\home\\";
         javaHome = System.getenv().get("JAVA_HOME");
         testRunnerClass = "com.salvador.runners.JavaTestRunner";
         testExecutorClass = "com.salvador.executors.DefaultExecutor";
+
+        Configuration loadedConfiguration =  configurationManager.load(home);
     }
 
     public String getHome() {

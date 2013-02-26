@@ -14,6 +14,7 @@ public class TestRunnerParameters {
     private String javaOptions;
     private String classPath;
     private String executorClass;
+    private String testId;
 
     public String getPage() {
         return page;
@@ -61,5 +62,13 @@ public class TestRunnerParameters {
 
     public void setClassPath(String classPath) {
         this.classPath = classPath;
+    }
+
+    public String getTestId() {
+        return testId;
+    }
+
+    public void setTestId(String testId) {
+        this.testId = testId;
     }
 }
