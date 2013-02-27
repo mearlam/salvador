@@ -118,6 +118,7 @@ public class ScenarioBean implements Serializable {
                 pageManager.save(configuration.getHome(), pageContent.getCurrentPage());
                 conversation.end();
 
+                FacesUtils.addMessage("Scenario saved", FacesMessage.SEVERITY_INFO);
                 FacesUtils.redirect(pageContent.getCurrentPage());
             }
         }
@@ -153,13 +154,16 @@ public class ScenarioBean implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
 
+        ScenarioTest test = new ScenarioTest();
+
         Map<String, String> testParams = new LinkedHashMap<String, String>();
         for (String param : parameters) {
             String paramValue = externalContext.getRequestParameterMap().get(param);
             testParams.put(param, paramValue);
         }
+        test.setData(testParams);
 
-        scenario.getTestRows().add(testParams);
+        scenario.getTests().add(test);
 
         return "";
     }

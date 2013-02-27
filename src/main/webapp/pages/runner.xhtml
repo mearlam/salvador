@@ -7,7 +7,7 @@
         template="/WEB-INF/templates/default-layout.xhtml">
 
     <ui:define name="main">
-        <h:form id="form" onload="pbAjax.start()">
+        <h:form id="form">
             <p:poll interval="2" update="main" stop="#{not testRunnerBean.running}"/>
 
             <h:panelGroup layout="block" id="main">
@@ -18,22 +18,22 @@
                     Finished!
                 </h:panelGroup>
 
-                Page: #{testRunnerBean.testSuite.page.name}
-                <ui:repeat value="#{testRunnerBean.testSuite.page.items}" var="item" varStatus="status">
-                    <h:panelGroup layout="block" rendered="#{item.getClass().getSimpleName() eq 'Scenario'}">
-                        <ui:include src="/WEB-INF/templates/running/scenario.xhtml"/>
+                <h3>Tests to run (#{testRunnerBean.testSuite.testsToRun})</h3>
+
+                <ui:repeat value="#{testRunnerBean.testSuite.progress}" var="progress" varStatus="status">
+                    <h:panelGroup layout="block" rendered="#{progress.getClass().getSimpleName() eq 'PageProgress'}">
+                        <h2>#{progress.page.name}</h2>
                     </h:panelGroup>
-                    <h:panelGroup layout="block" rendered="#{item.getClass().getSimpleName() eq 'PageNote'}">
-                        <ui:include src="/WEB-INF/templates/page-items/note.xhtml"/>
+                    <h:panelGroup layout="block" rendered="#{progress.item.getClass().getSimpleName() eq 'Scenario'}">
+                        <ui:include src="/WEB-INF/templates/running/scenario.xhtml"/>
                     </h:panelGroup>
                 </ui:repeat>
 
-                <h2>Log:</h2>
-
-                <div class="log">
-                    <h:outputText id="log" value="#{testRunnerBean.log}" escape="false"/>
-                </div>
-                <p:button value="Done" />
+                <p:panel header="Log Output" collapsed="true" toggleable="true">
+                    <div class="log">
+                        <h:outputText id="log" value="#{testRunnerBean.log}" escape="false"/>
+                    </div>
+                </p:panel>
             </h:panelGroup>
 
         </h:form>

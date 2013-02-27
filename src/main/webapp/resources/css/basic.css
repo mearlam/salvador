@@ -116,3 +116,11 @@ table.scenarioTable td {
     display: none;
     vertical-align: bottom;
 }
+
+.itemPassed {
+    background-color: #7fff00;
+}
+
+.itemFailed {
+    background-color: #f08080;
+}

@@ -7,6 +7,7 @@ import com.salvador.pages.PageManager;
 import com.salvador.spi.ViewScoped;
 import com.salvador.utils.FacesUtils;
 
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class PageNoteBean implements Serializable {
         Page page = pageContent.getCurrentPage();
         page.getItems().add(note);
         pageManager.save(configuration.getHome(),page);
+        FacesUtils.addMessage("Note saved", FacesMessage.SEVERITY_INFO);
         FacesUtils.redirect(pageContent.getCurrentPage());
     }
 

@@ -5,7 +5,10 @@
 
     <h:panelGroup layout="block" id="panel" styleClass="itemContainer">
 
-        <ui:include src="header.xhtml"/>
+        <h1><span class="ui-icon ui-icon-note"/>
+            <h:outputText value="#{item.name} #{item.enabled ? '' : '(Disabled)'}"/>
+            <ui:include src="actions.xhtml"/></h1>
+        <hr/>
 
         <h:panelGroup layout="block" id="scenario-detail" rendered="#{item.enabled}">
             <div class="infoContainer info"><h:outputText escape="false" value="#{item.notes}"/></div>
@@ -28,17 +31,17 @@
                     </tr>
                 </ui:repeat>
             </table>
-            <h:panelGroup layout="block" rendered="#{not empty item.testRows}">
+            <h:panelGroup layout="block" rendered="#{not empty item.tests}">
                 <table cellpadding="4" cellspacing="0" class="scenarioTable" style="margin-top: 0.5em">
                     <tr>
-                        <ui:repeat value="#{item.testRows.get(0).keySet().toArray()}" var="key">
+                        <ui:repeat value="#{item.tests.get(0).data.keySet().toArray()}" var="key">
                             <th>#{key}</th>
                         </ui:repeat>
                     </tr>
-                    <ui:repeat value="#{item.testRows}" var="row">
+                    <ui:repeat value="#{item.tests}" var="row">
                         <tr>
-                            <ui:repeat value="#{row.keySet().toArray()}" var="key">
-                                <td>#{row.get(key)}</td>
+                            <ui:repeat value="#{row.data.keySet().toArray()}" var="key">
+                                <td>#{row.data.get(key)}</td>
                             </ui:repeat>
                         </tr>
                     </ui:repeat>

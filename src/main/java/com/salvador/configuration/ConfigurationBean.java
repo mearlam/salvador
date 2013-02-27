@@ -1,9 +1,11 @@
 package com.salvador.configuration;
 
 import com.salvador.spi.ViewScoped;
+import com.salvador.utils.FacesUtils;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -34,6 +36,7 @@ public class ConfigurationBean implements Serializable {
         Configuration saveConfiguration = new Configuration();
         configuration.deepCopy(configuration,saveConfiguration);
         configurationManager.save(configuration.getHome(),saveConfiguration);
+        FacesUtils.addMessage("Configuration saved", FacesMessage.SEVERITY_INFO);
     }
 
     public void removeVariable(String key) throws IOException {

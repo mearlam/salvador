@@ -86,7 +86,7 @@
                                 <th>#{parameter}</th>
                             </ui:repeat>
                         </tr>
-                        <ui:repeat value="#{scenarioBean.scenario.testRows}" var="row">
+                        <ui:repeat value="#{scenarioBean.scenario.tests}" var="row">
                             <tr>
                                 <td>
                                     <p:commandButton icon="ui-icon-trash"
@@ -95,8 +95,8 @@
                                                      title="Delete"
                                                      styleClass="small-button"/>
                                 </td>
-                                <ui:repeat value="#{row.keySet().toArray()}" var="key">
-                                    <td>#{row.get(key)}</td>
+                                <ui:repeat value="#{row.data.keySet().toArray()}" var="key">
+                                    <td>#{row.data.get(key)}</td>
                                 </ui:repeat>
                             </tr>
                         </ui:repeat>

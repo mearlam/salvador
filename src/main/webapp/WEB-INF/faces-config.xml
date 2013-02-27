@@ -6,5 +6,8 @@
     http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
     version="2.0">
 
+    <lifecycle>
+        <phase-listener>com.salvador.listeners.MultiPageMessagesSupport</phase-listener>
+    </lifecycle>
  
 </faces-config>

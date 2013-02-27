@@ -32,6 +32,7 @@
                           rendered="#{pageBean.menuModel.contents.size() gt 1}"/>
 
             <div style="padding: 5px;">
+                <p:messages />
                 <span class="info" style="font-style: italic;">Pages:</span>
                 <ul style="list-style-type: none;">
                     <ui:repeat value="#{pageBean.page.children}" var="page">

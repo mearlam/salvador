@@ -4,6 +4,7 @@ import com.salvador.pages.Page;
 import com.salvador.pages.PageManager;
 import com.sun.deploy.net.HttpRequest;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,12 @@ import java.io.IOException;
  * Time: 12:04
  */
 public abstract class FacesUtils {
+
+    public static void addMessage(final String message, final FacesMessage.Severity severity) {
+        FacesMessage fm = new FacesMessage(message);
+        fm.setSeverity(severity);
+        FacesContext.getCurrentInstance().addMessage(null, fm);
+    }
 
     public static String getParam(String param) {
         final ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();

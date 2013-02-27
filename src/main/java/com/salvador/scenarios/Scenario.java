@@ -3,10 +3,8 @@ package com.salvador.scenarios;
 import com.salvador.common.annotations.AutoTest;
 import com.salvador.pages.PageItem;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,11 +20,11 @@ public class Scenario extends PageItem {
     private static final long serialVersionUID = -5550557777493406291L;
     private String notes;
     private List<ScenarioStep> steps;
-    private List<Map<String,String>> testRows;
+    private List<ScenarioTest> tests;
 
     public Scenario() {
         steps = new ArrayList<ScenarioStep>();
-        testRows = new ArrayList<Map<String, String>>();
+        tests = new ArrayList<ScenarioTest>();
         setCanBeDisabled(true);
     }
 
@@ -38,12 +36,12 @@ public class Scenario extends PageItem {
         this.steps = steps;
     }
 
-    public List<Map<String, String>> getTestRows() {
-        return testRows;
+    public List<ScenarioTest> getTests() {
+        return tests;
     }
 
-    public void setTestRows(List<Map<String, String>> testRows) {
-        this.testRows = testRows;
+    public void setTests(List<ScenarioTest> tests) {
+        this.tests = tests;
     }
 
     public String getNotes() {
@@ -58,6 +56,16 @@ public class Scenario extends PageItem {
         for(ScenarioStep step : steps) {
             if(step.getId() != null && step.getId().equals(id)) {
                 return step;
+            }
+        }
+
+        return null;
+    }
+
+    public ScenarioTest getTest(String id) {
+        for(ScenarioTest test : tests) {
+            if(test.getId() != null && test.getId().equals(id)) {
+                return test;
             }
         }
 

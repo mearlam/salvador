@@ -5,28 +5,19 @@
 
     <h:panelGroup layout="block" id="panel" styleClass="itemContainer">
 
-        <h:panelGroup layout="block" id="scenario-detail" rendered="#{item.enabled}">
-            <div class="infoContainer info"><h:outputText escape="false" value="#{item.notes}"/></div>
-            <table cellpadding="4" cellspacing="0" class="scenarioTable">
-                <ui:repeat value="#{item.steps}" var="step">
-                    <tr>
-                        <td>#{step.type.name()}</td>
-                        <td>#{step.text}</td>
-                    </tr>
-                </ui:repeat>
-            </table>
-            <h:panelGroup layout="block" rendered="#{not empty item.testRows}">
-                <table cellpadding="4" cellspacing="0" class="scenarioTable" style="margin-top: 0.5em">
-                    <tr>
-                        <ui:repeat value="#{item.testRows.get(0).keySet().toArray()}" var="key">
-                            <th>#{key}</th>
-                        </ui:repeat>
-                    </tr>
-                    <ui:repeat value="#{item.testRows}" var="row">
+        <h1><span class="ui-icon ui-icon-note"/><h:outputText value="#{progress.item.name}"/></h1>
+        <hr/>
+
+        <h:panelGroup layout="block" id="scenario-detail" rendered="#{progress.item.enabled}">
+            <div class="infoContainer info"><h:outputText escape="false" value="#{progress.item.notes}"/></div>
+            <h:panelGroup layout="block" rendered="#{not empty progress}">
+                <table cellpadding="4" cellspacing="0" class="scenarioTable">
+                    <ui:repeat value="#{progress.tests}" var="test">
                         <tr>
-                            <ui:repeat value="#{row.keySet().toArray()}" var="key">
-                                <td>#{row.get(key)}</td>
-                            </ui:repeat>
+                            <td>
+                            <h:outputText value="#{test.text}"
+                                          styleClass="#{test.passed ? 'itemPassed' : 'itemFailed'}" />
+                            </td>
                         </tr>
                     </ui:repeat>
                 </table>

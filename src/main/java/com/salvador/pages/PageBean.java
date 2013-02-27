@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -101,6 +102,10 @@ public class PageBean implements Serializable {
         return page;
     }
 
+    public void delete() {
+        // todo delete current page
+    }
+
     public void createPage() throws IOException {
 
         final String referer = FacesUtils.getParam("referer");
@@ -121,7 +126,12 @@ public class PageBean implements Serializable {
             }
         }
 
-        FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath());
+        FacesUtils.addMessage("Page saved", FacesMessage.SEVERITY_INFO);
+        if (StringUtils.isNotEmpty(page.getPath())) {
+            FacesUtils.redirect("/" + PageManager.TEST_FOLDER + "/" + page.getPath());
+        } else {
+            FacesUtils.redirect("/");
+        }
     }
 
     private boolean isDuplicate(String pageName) {
@@ -141,6 +151,7 @@ public class PageBean implements Serializable {
     public void handleClose(final String itemId) throws IOException {
         page.getItems().remove(page.getItem(itemId));
         pageManager.save(configuration.getHome(), page);
+        FacesUtils.addMessage("Item deleted", FacesMessage.SEVERITY_INFO);
     }
 
     public void handleEnable(final String itemId) throws IOException {
@@ -165,9 +176,10 @@ public class PageBean implements Serializable {
 
     public void handleFavouriteScenarioStep(final String stepId) throws IOException {
         ScenarioStep step = scenarioManager.getScenarioStep(page, stepId);
-        if(step != null) {
+        if (step != null) {
             step.setCommon(true);
-            pageManager.save(configuration.getHome(),page);
+            FacesUtils.addMessage("Scenario step added to common steps", FacesMessage.SEVERITY_INFO);
+            pageManager.save(configuration.getHome(), page);
         }
     }
 
